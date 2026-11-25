@@ -12,29 +12,37 @@
   header { text-align: center; margin-bottom: 20px; padding: 20px; background: #0f766e; color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
   header h1 { font-size: 24px; margin-bottom: 8px; }
   header p { font-size: 14px; opacity: 0.9; }
+  
   .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
   .tab-btn { padding: 10px 15px; border: none; border-radius: 8px; background: #e2e8f0; color: #475569; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 14px; }
   .tab-btn:hover { background: #cbd5e1; }
   .tab-btn.active { background: #0f766e; color: white; }
   .tab-content { display: none; }
   .tab-content.active { display: block; }
+  
   .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
   .card h2 { font-size: 18px; color: #0f766e; margin-bottom: 15px; border-bottom: 2px solid #ccfbf1; padding-bottom: 8px; }
   label { display: block; font-size: 15px; font-weight: 600; margin-bottom: 5px; color: #475569; }
   input[type="text"], input[type="number"], input[type="date"], textarea, select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; font-family: inherit; margin-bottom: 15px; }
+  textarea { min-height: 100px; resize: vertical; }
+  
   .question-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px; border-bottom: 1px solid #eee; gap: 15px; }
   .question-text { flex: 1; font-size: 14px; font-weight: 500; }
   .radio-group { display: flex; gap: 15px; flex-shrink: 0; }
   .radio-group label { font-weight: normal; display: flex; align-items: center; gap: 5px; cursor: pointer; margin-bottom: 0; font-size: 14px; }
   input[type="radio"], input[type="checkbox"] { width: 20px; height: 20px; accent-color: #0f766e; margin: 0; cursor: pointer; }
+
   .category-title { font-size: 16px; font-weight: 700; color: #0f766e; margin: 20px 0 10px; padding: 8px; background: #f0fdfa; border-radius: 8px; border-right: 4px solid #0f766e; }
   .age-group-title { font-size: 16px; font-weight: 700; margin: 20px 0 10px; padding: 10px; border-radius: 8px; border-right: 4px solid; text-align: center; }
   .age-group-title.current-age { background: #fefce8; border-right-color: #eab308; color: #854d0e; }
+  
   .words-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
   .word-item { display: flex; align-items: center; gap: 8px; padding: 5px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; font-size: 14px; }
   .summary-box { background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; margin-top: 20px; text-align: center; font-size: 16px; font-weight: bold; color: #0f766e; }
+
   button.action-btn { padding: 14px 30px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; font-size: 16px; background: #0f766e; color: white; transition: 0.2s; width: 100%; margin-top: 10px; }
   button.action-btn:hover { background: #115e59; }
+  
   @media print {
     body { background: white; padding: 0; font-family: Arial, sans-serif; }
     .tabs, .no-print, header p { display: none !important; }
@@ -52,16 +60,18 @@
   </header>
 
   <div class="tabs no-print">
-    <button class="tab-btn active" onclick="openTab('tab-data')">1. بيانات المستفيد</button>
+    <button class="tab-btn active" onclick="openTab('tab-data')">1. البيانات</button>
     <button class="tab-btn" onclick="openTab('tab-interview')">2. التاريخ اللغوي</button>
     <button class="tab-btn" onclick="openTab('tab-inventory')">3. جرد النمو</button>
     <button class="tab-btn" onclick="openTab('tab-vocab')">4. المفردات</button>
     <button class="tab-btn" onclick="openTab('tab-pragmatics')">5. البرجماتية</button>
     <button class="tab-btn" onclick="openTab('tab-morphology')">6. القواعد</button>
-    <button class="tab-btn" onclick="openTab('tab-report')">7. التقرير النهائي</button>
+    <button class="tab-btn" onclick="openTab('tab-semantics')">7. الدلالات</button>
+    <button class="tab-btn" onclick="openTab('tab-sample')">8. عينة الكلام</button>
+    <button class="tab-btn" onclick="openTab('tab-report')">9. التقرير النهائي</button>
   </div>
 
-  <!-- 1. بيانات المستفيد -->
+  <!-- 1. البيانات -->
   <div id="tab-data" class="tab-content active">
     <div class="card">
       <h2>بيانات المستفيد</h2>
@@ -69,7 +79,7 @@
         <div><label>اسم المستفيد:</label><input type="text" id="childName" placeholder="..."></div>
         <div><label>تاريخ الميلاد:</label><input type="date" id="dob" onchange="calculateAge()"></div>
         <div><label>تاريخ التقييم:</label><input type="date" id="evalDate" onchange="calculateAge()"></div>
-        <div><label>العمر الزمني (تلقائي):</label><input type="text" id="ageDisplay" readonly placeholder="سيظهر هنا..."></div>
+        <div><label>العمر الزمني:</label><input type="text" id="ageDisplay" readonly placeholder="..."></div>
         <div><label>اسم الأخصائي:</label><input type="text" id="therapist" value="Adham Salloum"></div>
         <div><label>الشكوى الرئيسية:</label><input type="text" id="complaint" placeholder="..."></div>
       </div>
@@ -78,83 +88,69 @@
 
   <!-- 2. التاريخ اللغوي -->
   <div id="tab-interview" class="tab-content">
-    <div class="card">
-      <h2>التاريخ اللغوي واستمارة الأهل</h2>
-      <div id="interviewQuestions"></div>
-    </div>
+    <div class="card"><h2>التاريخ اللغوي (الأهل)</h2><div id="interviewQuestions"></div></div>
   </div>
 
-  <!-- 3. جرد النمو اللغوي -->
+  <!-- 3. جرد النمو -->
   <div id="tab-inventory" class="tab-content">
-    <div class="card">
-      <h2>جرد النمو اللغوي</h2>
-      <div id="inventoryContainer"></div>
-      <div id="noInventoryMessage" style="text-align:center; padding:20px; color:#666;">الرجاء إدخال تاريخ الميلاد وتاريخ التقييم أولاً.</div>
-    </div>
+    <div class="card"><h2>جرد النمو اللغوي</h2><div id="inventoryContainer"></div></div>
   </div>
 
-  <!-- 4. مسح المفردات -->
+  <!-- 4. المفردات -->
   <div id="tab-vocab" class="tab-content">
-    <div class="card">
-      <h2>مسح المفردات اللغوية</h2>
-      <div id="vocabContainer"></div>
-      <div class="summary-box" id="summaryBox">إجمالي الكلمات المنطوقة: <span id="wordCount">0</span></div>
-    </div>
+    <div class="card"><h2>مسح المفردات</h2><div id="vocabContainer"></div><div class="summary-box">إجمالي الكلمات: <span id="wordCount">0</span></div></div>
   </div>
 
   <!-- 5. البرجماتية -->
   <div id="tab-pragmatics" class="tab-content">
-    <div class="card">
-      <h2>المهارات البرجماتية والتفاعل الاجتماعي</h2>
-      <div id="pragmaticsContainer"></div>
-    </div>
+    <div class="card"><h2>البرجماتية والتفاعل</h2><div id="pragmaticsContainer"></div></div>
   </div>
 
-  <!-- 6. تحليل القواعد -->
+  <!-- 6. القواعد -->
   <div id="tab-morphology" class="tab-content">
+    <div class="card"><h2>تحليل القواعد</h2><div id="morphologyContainer"></div></div>
+  </div>
+
+  <!-- 7. الدلالات (جديد) -->
+  <div id="tab-semantics" class="tab-content">
+    <div class="card"><h2>المهارات الدلالية (Semantics)</h2><div id="semanticsContainer"></div></div>
+  </div>
+
+  <!-- 8. عينة الكلام (جديد) -->
+  <div id="tab-sample" class="tab-content">
     <div class="card">
-      <h2>تحليل القواعد النحوية والصرفية</h2>
-      <div id="morphologyContainer"></div>
+      <h2>تسجيل عينة الكلام (Language Sample)</h2>
+      <label>اكتب جمل الطفل (كل جملة في سطر منفصل):</label>
+      <textarea id="languageSample" placeholder="مثال:&#10;أنا يريد ماما&#10;بابا راح&#10;هذا كرة كبيرة"></textarea>
+      <button class="action-btn" onclick="analyzeSample()">📊 حساب متوسط طول الجملة (MLU)</button>
+      <div id="mluResult" style="margin-top:15px; padding:15px; background:#f0fdfa; border-radius:8px; display:none;"></div>
     </div>
   </div>
 
-  <!-- 7. التقرير النهائي -->
+  <!-- 9. التقرير -->
   <div id="tab-report" class="tab-content">
     <div class="card">
-      <h2>توليد التقرير النهائي</h2>
-      <button class="action-btn no-print" onclick="generateReport()">📄 إنشاء التقرير والتشخيص المحتمل</button>
+      <h2>التقرير النهائي</h2>
+      <button class="action-btn no-print" onclick="generateReport()">📄 إنشاء التقرير والتشخيص</button>
       <div id="reportArea" style="display:none; margin-top:20px;"></div>
     </div>
   </div>
 </div>
 
 <script>
+// ================= البيانات =================
 let childAgeInYears = 0;
-function calculateAge() {
-  const dob = document.getElementById('dob').value;
-  const evalDate = document.getElementById('evalDate').value;
-  if (!dob || !evalDate) return;
-  const birth = new Date(dob), evalD = new Date(evalDate);
-  let years = evalD.getFullYear() - birth.getFullYear();
-  let months = evalD.getMonth() - birth.getMonth();
-  if (months < 0 || (months === 0 && evalD.getDate() < birth.getDate())) { years--; months += 12; }
-  childAgeInYears = years + (months / 12);
-  document.getElementById('ageDisplay').value = `${years} سنوات و ${months} أشهر`;
-  generateInventory();
-}
 
 const interviewData = ["هل تفهم تواصل طفلك غير اللفظي؟", "هل تفهم تواصل طفلك اللفظي؟", "هل يصدر طفلك أصواتاً كلامية؟", "هل يستخدم طفلك كلمات؟", "هل يدمج طفلك الكلمات؟", "هل يقلد طفلك تعابير الوجه؟", "هل يقلد طفلك أصوات الكلام؟", "هل يشير طفلك إلى الأشياء المألوفة؟", "هل يفهم طفلك ما تقوله له؟", "هل يجيب طفلك عن أسئلة بسيطة؟", "هل يستجيب طفلك للأوامر البسيطة؟", "هل يحافظ طفلك على التواصل البصري؟", "هل يبتسم طفلك بشكل متكرر؟", "هل يلعب طفلك بشكل جيد مع الآخرين؟", "هل يفهم طفلك وظائف الأشياء؟", "هل يطرح طفلك أسئلة؟"];
-
 const inventoryData = [
-  { ageGroup: "0-6 أشهر", minAge: 0, maxAge: 0.5, items: ["يصدر أصواتاً هادئة وغرغرة.", "يبتسم عند التحدث إليه.", "يتعرف على الأصوات.", "يوجه نظره نحو مصدر الصوت."] },
-  { ageGroup: "7-12 شهراً", minAge: 0.58, maxAge: 1.0, items: ["يفهم معنى 'لا'.", "يستجيب للطلبات البسيطة.", "يفهم ويستجيب لاسمه.", "يناغي بمجموعات طويلة من الأصوات."] },
-  { ageGroup: "13-18 شهراً", minAge: 1.08, maxAge: 1.5, items: ["يقلد كلمات فردية.", "يتبع أوامر بسيطة.", "لديه حصيلة تعبيرية من 3 إلى 20 كلمة.", "يجمع بين الإيماءات والأصوات."] },
-  { ageGroup: "19-24 شهراً", minAge: 1.58, maxAge: 2.0, items: ["يستخدم الكلمات أكثر من الرطانة.", "لديه حصيلة تعبيرية من 50 إلى 100 كلمة.", "يبدأ في استخدام الضمائر.", "يشير إلى الصور عند تسميتها."] },
-  { ageGroup: "2-3 سنوات", minAge: 2.08, maxAge: 3.09, items: ["الكلام مفهوم بنسبة 50% إلى 75%.", "يتبع أوامر من جزأين.", "يستخدم عبارات من كلمتين إلى أربع كلمات.", "يستخدم الضمائر بشكل مناسب."] },
-  { ageGroup: "3-4 سنوات", minAge: 3.1, maxAge: 4.0, items: ["يفهم الأضداد.", "يتبع أوامر من ثلاثة أجزاء.", "يستخدم جملاً من أربع إلى خمس كلمات.", "الكلام مفهوم بنسبة 80%."] },
-  { ageGroup: "4-5 سنوات", minAge: 4.1, maxAge: 5.0, items: ["يستخدم قواعد نحوية تشبه الكبار.", "يستخدم جملاً من أربع إلى ثماني كلمات.", "يروي حدثين بالترتيب الزمني."] }
+  { ageGroup: "0-6 أشهر", minAge: 0, maxAge: 0.5, items: ["يصدر أصواتاً هادئة.", "يبتسم عند التحدث إليه.", "يتعرف على الأصوات.", "يوجه نظره نحو مصدر الصوت."] },
+  { ageGroup: "7-12 شهراً", minAge: 0.58, maxAge: 1.0, items: ["يفهم معنى 'لا'.", "يستجيب للطلبات البسيطة.", "يفهم ويستجيب لاسمه.", "يناغي بمجموعات طويلة."] },
+  { ageGroup: "13-18 شهراً", minAge: 1.08, maxAge: 1.5, items: ["يقلد كلمات فردية.", "يتبع أوامر بسيطة.", "حصيلة تعبيرية 3-20 كلمة.", "يجمع بين الإيماءات والأصوات."] },
+  { ageGroup: "19-24 شهراً", minAge: 1.58, maxAge: 2.0, items: ["يستخدم الكلمات أكثر من الرطانة.", "حصيلة 50-100 كلمة.", "يبدأ في استخدام الضمائر.", "يشير إلى الصور عند تسميتها."] },
+  { ageGroup: "2-3 سنوات", minAge: 2.08, maxAge: 3.09, items: ["الكلام مفهوم 50-75%.", "يتبع أوامر من جزأين.", "عبارات من كلمتين إلى أربع.", "يستخدم الضمائر بشكل مناسب."] },
+  { ageGroup: "3-4 سنوات", minAge: 3.1, maxAge: 4.0, items: ["يفهم الأضداد.", "يتبع أوامر من ثلاثة أجزاء.", "جمل من 4-5 كلمات.", "الكلام مفهوم 80%."] },
+  { ageGroup: "4-5 سنوات", minAge: 4.1, maxAge: 5.0, items: ["يستخدم قواعد نحوية تشبه الكبار.", "جمل من 4-8 كلمات.", "يروي حدثين بالترتيب الزمني."] }
 ];
-
 const vocabData = {
   "الطعام والشراب": ["تفاحة", "موز", "خبز", "زبدة", "كيك", "حلوى", "حبوب", "جبن", "رقائق", "قهوة", "بسكويت", "شراب", "بيض", "طعام", "عنب", "علكة", "هامبرغر", "آيس كريم", "عصير", "لحم", "حليب", "برتقال", "بيتزا", "مياه", "معكرونة", "شوربة"],
   "الألعاب": ["كرة", "بالون", "مكعبات", "كتاب", "فقاعات", "دمية", "هدية", "زحليقة", "دبدوب"],
@@ -162,16 +158,35 @@ const vocabData = {
   "أجزاء الجسم": ["ذراع", "بطن", "ذقن", "أذن", "كوع", "عين", "وجه", "إصبع", "قدم", "شعر", "يد", "ركبة", "ساق", "فم", "رقبة", "أنف", "أسنان"],
   "الأفعال": ["استحمام", "إفطار", "إحضار", "إمساك", "تصفيق", "إغلاق", "مجيء", "سعال", "قطع", "رقص", "عشاء", "أكل", "إطعام", "إنهاء", "إصلاح", "إعطاء", "ذهاب", "مساعدة", "ضرب", "معانقة", "قفز", "ركل", "تقبيل", "طرق", "بحث", "غداء", "صنع", "قراءة", "جري", "رؤية", "غناء", "جلوس", "نوم", "توقف", "أخذ", "رمي", "مشي"]
 };
-
-const pragmaticsData = ["يأخذ الطفل دوره أثناء التواصل.", "يستمتع الطفل باللعب مع أطفال آخرين.", "يستمتع الطفل باللعب مع والديه.", "يلعب الطفل عادةً بمفرده.", "يتحدث الطفل أثناء أنشطة اللعب.", "يستخدم الطفل الإيماءات للتواصل.", "ينظر الطفل إلى المستمع عند التحدث.", "يروي الطفل تجارب واقعية أثناء المحادثة.", "يطرح الطفل أسئلة أثناء اللعب.", "يجيب الطفل عن أسئلة أثناء اللعب."];
-
+const pragmaticsData = ["يأخذ الطفل دوره أثناء التواصل.", "يستمتع باللعب مع أطفال آخرين.", "يستمتع باللعب مع والديه.", "يلعب عادةً بمفرده.", "يتحدث أثناء أنشطة اللعب.", "يستخدم الإيماءات للتواصل.", "ينظر إلى المستمع عند التحدث.", "يروي تجارب واقعية أثناء المحادثة.", "يطرح أسئلة أثناء اللعب.", "يجيب عن أسئلة أثناء اللعب."];
 const morphologyData = [
-  { category: "الجمع", items: ["يستخدم جمع المؤنث السالم", "يستخدم جمع المذكر السالم", "يستخدم جمع التكسير"] },
-  { category: "الملكية", items: ["يستخدم ضمائر الملكية المتصلة", "يستخدم ضمائر الملكية المنفصلة"] },
-  { category: "الأفعال", items: ["يستخدم الفعل المضارع", "يستخدم الفعل الماضي", "يستخدم فعل الأمر"] },
-  { category: "الضمائر", items: ["يستخدم ضمائر المتكلم", "يستخدم ضمائر المخاطب", "يستخدم ضمائر الغائب"] },
-  { category: "حروف الجر", items: ["يستخدم 'في' بشكل صحيح", "يستخدم 'على' بشكل صحيح", "يستخدم 'تحت' بشكل صحيح", "يستخدم 'فوق' بشكل صحيح"] }
+  { category: "الجمع", items: ["جمع المؤنث السالم", "جمع المذكر السالم", "جمع التكسير"] },
+  { category: "الملكية", items: ["ضمائر الملكية المتصلة", "ضمائر الملكية المنفصلة"] },
+  { category: "الأفعال", items: ["الفعل المضارع", "الفعل الماضي", "فعل الأمر"] },
+  { category: "الضمائر", items: ["ضمائر المتكلم", "ضمائر المخاطب", "ضمائر الغائب"] },
+  { category: "حروف الجر", items: ["في", "على", "تحت", "فوق"] }
 ];
+const semanticsData = [
+  { category: "التصنيف (Category)", question: "اذكر 3 حيوانات:", type: "text" },
+  { category: "التصنيف (Category)", question: "اذكر 3 فواكه:", type: "text" },
+  { category: "الأضداد (Antonyms)", question: "ما هو عكس كلمة (كبير)؟", type: "text" },
+  { category: "الأضداد (Antonyms)", question: "ما هو عكس كلمة (حار)؟", type: "text" },
+  { category: "المرادفات (Synonyms)", question: "ما هي كلمة تعني نفس معنى (جميل)؟", type: "text" },
+  { category: "الوظائف (Functions)", question: "ما هي وظيفة (الكرسي)؟", type: "text" },
+  { category: "الوظائف (Functions)", question: "ما هي وظيفة (الملعقة)؟", type: "text" }
+];
+
+// ================= الوظائف =================
+function calculateAge() {
+  const dob = document.getElementById('dob').value, evalDate = document.getElementById('evalDate').value;
+  if (!dob || !evalDate) return;
+  const birth = new Date(dob), evalD = new Date(evalDate);
+  let years = evalD.getFullYear() - birth.getFullYear(), months = evalD.getMonth() - birth.getMonth();
+  if (months < 0 || (months === 0 && evalD.getDate() < birth.getDate())) { years--; months += 12; }
+  childAgeInYears = years + (months / 12);
+  document.getElementById('ageDisplay').value = `${years} سنوات و ${months} أشهر`;
+  generateInventory();
+}
 
 function openTab(tabId) {
   document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -186,9 +201,9 @@ function generateInterview() {
 }
 
 function generateInventory() {
-  const c = document.getElementById('inventoryContainer'), noMsg = document.getElementById('noInventoryMessage');
-  if (childAgeInYears === 0) { c.innerHTML = ''; noMsg.style.display = 'block'; return; }
-  noMsg.style.display = 'none'; c.innerHTML = '';
+  const c = document.getElementById('inventoryContainer');
+  if (childAgeInYears === 0) { c.innerHTML = '<div style="text-align:center; padding:20px;">الرجاء إدخال تاريخ الميلاد.</div>'; return; }
+  c.innerHTML = '';
   inventoryData.forEach((group, gi) => {
     if (childAgeInYears >= group.minAge) {
       const isCurrent = (childAgeInYears >= group.minAge && childAgeInYears <= group.maxAge);
@@ -224,8 +239,42 @@ function generateMorphology() {
   });
 }
 
-window.onload = function() { generateInterview(); generateInventory(); generateVocab(); generatePragmatics(); generateMorphology(); };
+function generateSemantics() {
+  const c = document.getElementById('semanticsContainer'); c.innerHTML = '';
+  semanticsData.forEach((item, i) => {
+    c.innerHTML += `<div class="question-item" style="flex-direction:column; align-items:flex-start;">
+      <div class="question-text"><strong>${item.category}:</strong> ${item.question}</div>
+      <input type="text" id="sem_${i}" placeholder="إجابة الطفل..." style="margin-top:5px;">
+    </div>`;
+  });
+}
+
+function analyzeSample() {
+  const text = document.getElementById('languageSample').value.trim();
+  if (!text) { alert('الرجاء إدخال عينة الكلام أولاً.'); return; }
+  const sentences = text.split('\n').filter(s => s.trim() !== '');
+  const totalWords = sentences.reduce((sum, s) => sum + s.trim().split(/\s+/).length, 0);
+  const mlu = (totalWords / sentences.length).toFixed(2);
+  
+  let ageExpected = "";
+  if (childAgeInYears < 2) ageExpected = "1.0 - 2.0";
+  else if (childAgeInYears < 3) ageExpected = "2.0 - 3.0";
+  else if (childAgeInYears < 4) ageExpected = "3.0 - 4.5";
+  else ageExpected = "4.5+";
+
+  document.getElementById('mluResult').style.display = 'block';
+  document.getElementById('mluResult').innerHTML = `
+    <p><strong>عدد الجمل:</strong> ${sentences.length}</p>
+    <p><strong>عدد الكلمات:</strong> ${totalWords}</p>
+    <p><strong>متوسط طول الجملة (MLU):</strong> ${mlu}</p>
+    <p><strong>المتوقع لعمر ${childAgeInYears.toFixed(1)} سنة:</strong> ${ageExpected}</p>
+  `;
+}
+
+window.onload = function() { generateInterview(); generateInventory(); generateVocab(); generatePragmatics(); generateMorphology(); generateSemantics(); };
 </script>
+
+<!-- الجزء الثاني: التقرير -->
 <script>
 function calculatePercentage(prefix, count) {
   let score = 0, possible = 0;
@@ -242,7 +291,6 @@ function generateReport() {
   const ageDisplay = document.getElementById('ageDisplay').value || 'غير محدد';
   const complaint = document.getElementById('complaint').value || 'غير محدد';
   
-  // حساب النسب
   const totalWords = document.querySelectorAll('#vocabContainer input:checked').length;
   const intPercent = calculatePercentage('int', interviewData.length);
   const pragPercent = calculatePercentage('prag', pragmaticsData.length);
@@ -269,28 +317,25 @@ function generateReport() {
   });
   const morphPercent = morphPossible > 0 ? (morphScore / morphPossible) * 100 : 0;
 
-  // محرك التشخيص
-  let diagnosis = "";
-  let reason = "";
-
+  let diagnosis = "", reason = "";
   if (pragPercent < 50 && invPercent < 60) {
-    diagnosis = "اشتباه اضطراب طيف التوحد أو اضطراب التواصل الاجتماعي (Pragmatic/Social Communication Disorder)";
+    diagnosis = "اشتباه اضطراب طيف التوحد أو اضطراب التواصل الاجتماعي";
     reason = "ضعف واضح في المهارات البرجماتية والتفاعل الاجتماعي، مع تأخر في النمو اللغوي.";
   } else if (pragPercent < 60) {
-    diagnosis = "اضطراب التواصل الاجتماعي (البرجماتي) (Social Communication Disorder)";
+    diagnosis = "اضطراب التواصل الاجتماعي (البرجماتي)";
     reason = "ضعف في استخدام اللغة في السياق الاجتماعي، مع سلامة نسبية في المفردات والقواعد.";
   } else if (invPercent < 50 && intPercent < 50) {
     diagnosis = "اضطراب اللغة المختلط (Mixed Receptive-Expressive Language Disorder)";
-    reason = "تأخر شامل في الفهم والتعبير اللغوي بناءً على التاريخ اللغوي وجرد النمو.";
+    reason = "تأخر شامل في الفهم والتعبير اللغوي.";
   } else if (invPercent < 60) {
-    diagnosis = "تأخر لغوي بسيط إلى متوسط (Mild-Moderate Language Delay)";
+    diagnosis = "تأخر لغوي بسيط إلى متوسط";
     reason = "وجود تأخر في بعض مهارات النمو اللغوي مقارنة بالعمر الزمني.";
   } else if (morphPercent < 50 && totalWords > 50) {
     diagnosis = "اضطراب لغوي تعبيري (Expressive Language Disorder)";
-    reason = "حصيلة المفردات جيدة، ولكن هناك ضعف في القواعد النحوية (Morphology).";
+    reason = "حصيلة المفردات جيدة، ولكن هناك ضعف في القواعد النحوية.";
   } else {
-    diagnosis = "نمو لغوي ضمن الحدود الطبيعية (Normal Language Development)";
-    reason = "المستفيد يظهر مهارات لغوية وبرجماتية جيدة مقارنة بعمره.";
+    diagnosis = "نمو لغوي ضمن الحدود الطبيعية";
+    reason = "المستفيد يظهر مهارات لغوية وبرجماتية جيدة.";
   }
 
   const reportHTML = `
@@ -301,10 +346,10 @@ function generateReport() {
       <p><strong>العمر الزمني:</strong> ${ageDisplay}</p>
       <p><strong>الشكوى الرئيسية:</strong> ${complaint}</p>
       
-      <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px; margin-top:20px;">2. لوحة النتائج (Dashboard)</h3>
+      <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px; margin-top:20px;">2. لوحة النتائج</h3>
       <table style="width:100%; border-collapse:collapse; margin-top:10px;">
         <tr style="background:#f0fdfa;"><th style="border:1px solid #ccc; padding:8px;">المجال</th><th style="border:1px solid #ccc; padding:8px;">النسبة</th></tr>
-        <tr><td style="border:1px solid #ccc; padding:8px;">التاريخ اللغوي (الأهل)</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${intPercent.toFixed(1)}%</td></tr>
+        <tr><td style="border:1px solid #ccc; padding:8px;">التاريخ اللغوي</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${intPercent.toFixed(1)}%</td></tr>
         <tr><td style="border:1px solid #ccc; padding:8px;">جرد النمو اللغوي</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${invPercent.toFixed(1)}%</td></tr>
         <tr><td style="border:1px solid #ccc; padding:8px;">المهارات البرجماتية</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${pragPercent.toFixed(1)}%</td></tr>
         <tr><td style="border:1px solid #ccc; padding:8px;">تحليل القواعد</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${morphPercent.toFixed(1)}%</td></tr>
