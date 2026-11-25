@@ -12,43 +12,29 @@
   header { text-align: center; margin-bottom: 20px; padding: 20px; background: #0f766e; color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
   header h1 { font-size: 24px; margin-bottom: 8px; }
   header p { font-size: 14px; opacity: 0.9; }
-  
-  /* التبويبات */
   .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
   .tab-btn { padding: 10px 15px; border: none; border-radius: 8px; background: #e2e8f0; color: #475569; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 14px; }
   .tab-btn:hover { background: #cbd5e1; }
   .tab-btn.active { background: #0f766e; color: white; }
-
   .tab-content { display: none; }
   .tab-content.active { display: block; }
-
   .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
   .card h2 { font-size: 18px; color: #0f766e; margin-bottom: 15px; border-bottom: 2px solid #ccfbf1; padding-bottom: 8px; }
-  
   label { display: block; font-size: 15px; font-weight: 600; margin-bottom: 5px; color: #475569; }
   input[type="text"], input[type="number"], input[type="date"], textarea, select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; font-family: inherit; margin-bottom: 15px; }
-  textarea { min-height: 80px; resize: vertical; }
-
   .question-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px; border-bottom: 1px solid #eee; gap: 15px; }
   .question-text { flex: 1; font-size: 14px; font-weight: 500; }
   .radio-group { display: flex; gap: 15px; flex-shrink: 0; }
   .radio-group label { font-weight: normal; display: flex; align-items: center; gap: 5px; cursor: pointer; margin-bottom: 0; font-size: 14px; }
   input[type="radio"], input[type="checkbox"] { width: 20px; height: 20px; accent-color: #0f766e; margin: 0; cursor: pointer; }
-
+  .category-title { font-size: 16px; font-weight: 700; color: #0f766e; margin: 20px 0 10px; padding: 8px; background: #f0fdfa; border-radius: 8px; border-right: 4px solid #0f766e; }
+  .age-group-title { font-size: 16px; font-weight: 700; margin: 20px 0 10px; padding: 10px; border-radius: 8px; border-right: 4px solid; text-align: center; }
+  .age-group-title.current-age { background: #fefce8; border-right-color: #eab308; color: #854d0e; }
   .words-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
   .word-item { display: flex; align-items: center; gap: 8px; padding: 5px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; font-size: 14px; }
-  
-  .category-title { font-size: 16px; font-weight: 700; color: #0f766e; margin: 20px 0 10px; padding: 8px; background: #f0fdfa; border-radius: 8px; border-right: 4px solid #0f766e; }
-
   .summary-box { background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; margin-top: 20px; text-align: center; font-size: 16px; font-weight: bold; color: #0f766e; }
-
   button.action-btn { padding: 14px 30px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; font-size: 16px; background: #0f766e; color: white; transition: 0.2s; width: 100%; margin-top: 10px; }
   button.action-btn:hover { background: #115e59; }
-  
-  .result-area { display: none; margin-top: 30px; padding: 20px; border-radius: 12px; border: 2px solid #0f766e; background: #f0fdfa; }
-  .result-area h3 { color: #0f766e; font-size: 22px; margin-bottom: 15px; border-bottom: 2px solid #0f766e; padding-bottom: 8px; }
-  .recommendation { background: #fff; padding: 15px; border-radius: 8px; border-right: 4px solid #0f766e; font-size: 15px; margin-bottom: 15px; }
-
   @media print {
     body { background: white; padding: 0; font-family: Arial, sans-serif; }
     .tabs, .no-print, header p { display: none !important; }
@@ -67,11 +53,12 @@
 
   <div class="tabs no-print">
     <button class="tab-btn active" onclick="openTab('tab-data')">1. بيانات المستفيد</button>
-    <button class="tab-btn" onclick="openTab('tab-interview')">2. التاريخ اللغوي (الأهل)</button>
-    <button class="tab-btn" onclick="openTab('tab-inventory')">3. جرد النمو اللغوي</button>
-    <button class="tab-btn" onclick="openTab('tab-vocab')">4. مسح المفردات</button>
-    <button class="tab-btn" onclick="openTab('tab-morphology')">5. تحليل القواعد</button>
-    <button class="tab-btn" onclick="openTab('tab-report')">6. التقرير النهائي</button>
+    <button class="tab-btn" onclick="openTab('tab-interview')">2. التاريخ اللغوي</button>
+    <button class="tab-btn" onclick="openTab('tab-inventory')">3. جرد النمو</button>
+    <button class="tab-btn" onclick="openTab('tab-vocab')">4. المفردات</button>
+    <button class="tab-btn" onclick="openTab('tab-pragmatics')">5. البرجماتية</button>
+    <button class="tab-btn" onclick="openTab('tab-morphology')">6. القواعد</button>
+    <button class="tab-btn" onclick="openTab('tab-report')">7. التقرير النهائي</button>
   </div>
 
   <!-- 1. بيانات المستفيد -->
@@ -80,9 +67,9 @@
       <h2>بيانات المستفيد</h2>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
         <div><label>اسم المستفيد:</label><input type="text" id="childName" placeholder="..."></div>
-        <div><label>تاريخ الميلاد:</label><input type="date" id="dob"></div>
-        <div><label>تاريخ التقييم:</label><input type="date" id="evalDate"></div>
-        <div><label>العمر الزمني:</label><input type="text" id="age" placeholder="..."></div>
+        <div><label>تاريخ الميلاد:</label><input type="date" id="dob" onchange="calculateAge()"></div>
+        <div><label>تاريخ التقييم:</label><input type="date" id="evalDate" onchange="calculateAge()"></div>
+        <div><label>العمر الزمني (تلقائي):</label><input type="text" id="ageDisplay" readonly placeholder="سيظهر هنا..."></div>
         <div><label>اسم الأخصائي:</label><input type="text" id="therapist" value="Adham Salloum"></div>
         <div><label>الشكوى الرئيسية:</label><input type="text" id="complaint" placeholder="..."></div>
       </div>
@@ -100,9 +87,9 @@
   <!-- 3. جرد النمو اللغوي -->
   <div id="tab-inventory" class="tab-content">
     <div class="card">
-      <h2>جرد النمو اللغوي (مهارات التواصل)</h2>
-      <p style="font-size:13px; color:#666; margin-bottom:15px;">يرجى تحديد ما إذا كان الطفل يمتلك هذه المهارات.</p>
+      <h2>جرد النمو اللغوي</h2>
       <div id="inventoryContainer"></div>
+      <div id="noInventoryMessage" style="text-align:center; padding:20px; color:#666;">الرجاء إدخال تاريخ الميلاد وتاريخ التقييم أولاً.</div>
     </div>
   </div>
 
@@ -110,295 +97,232 @@
   <div id="tab-vocab" class="tab-content">
     <div class="card">
       <h2>مسح المفردات اللغوية</h2>
-      <p style="font-size:13px; color:#666; margin-bottom:15px;">يرجى تحديد الكلمات التي ينطقها الطفل تلقائياً.</p>
       <div id="vocabContainer"></div>
-      <div class="summary-box" id="summaryBox">
-        إجمالي الكلمات المنطوقة: <span id="wordCount">0</span>
-      </div>
+      <div class="summary-box" id="summaryBox">إجمالي الكلمات المنطوقة: <span id="wordCount">0</span></div>
     </div>
   </div>
 
-  <!-- 5. تحليل القواعد -->
+  <!-- 5. البرجماتية -->
+  <div id="tab-pragmatics" class="tab-content">
+    <div class="card">
+      <h2>المهارات البرجماتية والتفاعل الاجتماعي</h2>
+      <div id="pragmaticsContainer"></div>
+    </div>
+  </div>
+
+  <!-- 6. تحليل القواعد -->
   <div id="tab-morphology" class="tab-content">
     <div class="card">
       <h2>تحليل القواعد النحوية والصرفية</h2>
-      <p style="font-size:13px; color:#666; margin-bottom:15px;">يرجى تحديد ما إذا كان الطفل يستخدم هذه الصيغ بشكل صحيح.</p>
       <div id="morphologyContainer"></div>
     </div>
   </div>
 
-  <!-- 6. التقرير النهائي -->
+  <!-- 7. التقرير النهائي -->
   <div id="tab-report" class="tab-content">
     <div class="card">
       <h2>توليد التقرير النهائي</h2>
-      <button class="action-btn no-print" onclick="generateReport()">📄 إنشاء التقرير الشامل</button>
+      <button class="action-btn no-print" onclick="generateReport()">📄 إنشاء التقرير والتشخيص المحتمل</button>
       <div id="reportArea" style="display:none; margin-top:20px;"></div>
     </div>
   </div>
 </div>
 
 <script>
-// ================= بيانات النماذج =================
+let childAgeInYears = 0;
+function calculateAge() {
+  const dob = document.getElementById('dob').value;
+  const evalDate = document.getElementById('evalDate').value;
+  if (!dob || !evalDate) return;
+  const birth = new Date(dob), evalD = new Date(evalDate);
+  let years = evalD.getFullYear() - birth.getFullYear();
+  let months = evalD.getMonth() - birth.getMonth();
+  if (months < 0 || (months === 0 && evalD.getDate() < birth.getDate())) { years--; months += 12; }
+  childAgeInYears = years + (months / 12);
+  document.getElementById('ageDisplay').value = `${years} سنوات و ${months} أشهر`;
+  generateInventory();
+}
 
-// 1. أسئلة استمارة الأهل (Intake Interview)
-const interviewData = [
-  "هل تفهم تواصل طفلك غير اللفظي (مثل الإشارة، البكاء)؟",
-  "هل تفهم تواصل طفلك اللفظي؟",
-  "هل يصدر طفلك أصواتاً كلامية؟",
-  "هل يستخدم طفلك كلمات؟",
-  "هل يدمج طفلك الكلمات (مثل: أريد ماء)؟",
-  "هل يقلد طفلك تعابير الوجه؟",
-  "هل يقلد طفلك أصوات الكلام؟",
-  "هل يشير طفلك إلى الأشياء المألوفة عند تسميتها؟",
-  "هل يفهم طفلك ما تقوله له؟",
-  "هل يجيب طفلك عن أسئلة بسيطة؟",
-  "هل يستجيب طفلك للأوامر البسيطة (مثل: أحضر كوبك)؟",
-  "هل يحافظ طفلك على التواصل البصري معك بانتظام؟",
-  "هل يبتسم طفلك بشكل متكرر؟",
-  "هل يلعب طفلك بشكل جيد مع الآخرين؟",
-  "هل يفهم طفلك وظائف الأشياء (مثل: الكوب للشرب)؟",
-  "هل يطرح طفلك أسئلة؟"
-];
+const interviewData = ["هل تفهم تواصل طفلك غير اللفظي؟", "هل تفهم تواصل طفلك اللفظي؟", "هل يصدر طفلك أصواتاً كلامية؟", "هل يستخدم طفلك كلمات؟", "هل يدمج طفلك الكلمات؟", "هل يقلد طفلك تعابير الوجه؟", "هل يقلد طفلك أصوات الكلام؟", "هل يشير طفلك إلى الأشياء المألوفة؟", "هل يفهم طفلك ما تقوله له؟", "هل يجيب طفلك عن أسئلة بسيطة؟", "هل يستجيب طفلك للأوامر البسيطة؟", "هل يحافظ طفلك على التواصل البصري؟", "هل يبتسم طفلك بشكل متكرر؟", "هل يلعب طفلك بشكل جيد مع الآخرين؟", "هل يفهم طفلك وظائف الأشياء؟", "هل يطرح طفلك أسئلة؟"];
 
-// 2. جرد النمو اللغوي (Milestones Inventory)
 const inventoryData = [
-  "يصدر أصواتاً هادئة وغرغرة وأصوات تعبير عن السعادة.",
-  "يستخدم بكاءً مختلفاً للتعبير عن احتياجات مختلفة.",
-  "يبتسم عند التحدث إليه.",
-  "يتعرف على الأصوات (يميز صوت الأم).",
-  "يوجه نظره نحو مصدر الصوت.",
-  "يفهم معنى 'لا' و'حار'.",
-  "يستجيب للطلبات البسيطة.",
-  "يفهم ويستجيب لاسمه.",
-  "يقلد كلمات فردية.",
-  "يتبع أوامر بسيطة.",
-  "يستخدم الكلمات أكثر من الرطانة.",
-  "لديه حصيلة تعبيرية من 50 إلى 100 كلمة.",
-  "يبدأ في دمج الأسماء مع الأفعال.",
-  "يبدأ في استخدام الضمائر.",
-  "الكلام مفهوم للغرباء بنسبة 50% إلى 75%.",
-  "يتبع أوامر من جزأين.",
-  "يستخدم عبارات من كلمتين إلى أربع كلمات.",
-  "يستمر في استخدام الترديد عند مواجهة صعوبات.",
-  "لديه حصيلة تعبيرية من 50 إلى 250 كلمة.",
-  "يفهم معظم ما يقال له."
+  { ageGroup: "0-6 أشهر", minAge: 0, maxAge: 0.5, items: ["يصدر أصواتاً هادئة وغرغرة.", "يبتسم عند التحدث إليه.", "يتعرف على الأصوات.", "يوجه نظره نحو مصدر الصوت."] },
+  { ageGroup: "7-12 شهراً", minAge: 0.58, maxAge: 1.0, items: ["يفهم معنى 'لا'.", "يستجيب للطلبات البسيطة.", "يفهم ويستجيب لاسمه.", "يناغي بمجموعات طويلة من الأصوات."] },
+  { ageGroup: "13-18 شهراً", minAge: 1.08, maxAge: 1.5, items: ["يقلد كلمات فردية.", "يتبع أوامر بسيطة.", "لديه حصيلة تعبيرية من 3 إلى 20 كلمة.", "يجمع بين الإيماءات والأصوات."] },
+  { ageGroup: "19-24 شهراً", minAge: 1.58, maxAge: 2.0, items: ["يستخدم الكلمات أكثر من الرطانة.", "لديه حصيلة تعبيرية من 50 إلى 100 كلمة.", "يبدأ في استخدام الضمائر.", "يشير إلى الصور عند تسميتها."] },
+  { ageGroup: "2-3 سنوات", minAge: 2.08, maxAge: 3.09, items: ["الكلام مفهوم بنسبة 50% إلى 75%.", "يتبع أوامر من جزأين.", "يستخدم عبارات من كلمتين إلى أربع كلمات.", "يستخدم الضمائر بشكل مناسب."] },
+  { ageGroup: "3-4 سنوات", minAge: 3.1, maxAge: 4.0, items: ["يفهم الأضداد.", "يتبع أوامر من ثلاثة أجزاء.", "يستخدم جملاً من أربع إلى خمس كلمات.", "الكلام مفهوم بنسبة 80%."] },
+  { ageGroup: "4-5 سنوات", minAge: 4.1, maxAge: 5.0, items: ["يستخدم قواعد نحوية تشبه الكبار.", "يستخدم جملاً من أربع إلى ثماني كلمات.", "يروي حدثين بالترتيب الزمني."] }
 ];
 
-// 3. مسح المفردات
 const vocabData = {
-  "الطعام والشراب": ["تفاحة", "موز", "خبز", "زبدة", "كيك", "حلوى", "حبوب", "جبن", "رقائق", "قهوة", "بسكويت", "مقرمشات", "شراب", "بيض", "طعام", "عنب", "علكة", "هامبرغر", "هوت دوغ", "آيس كريم", "عصير", "لحم", "حليب", "برتقال", "بيتزا", "مياه", "معكرونة", "شوربة"],
-  "الألعاب": ["كرة", "بالون", "مكعبات", "كتاب", "فقاعات", "طباشير", "دمية", "هدية", "زحليقة", "دبدوب", "أرجوحة"],
-  "الحيوانات": ["دب", "نحلة", "طائر", "بقرة", "كلب", "بطة", "فيل", "سمكة", "ضفدع", "حصان", "قرد", "خنزير", "جرو", "ثعبان", "نمر", "ديك رومي", "سلحفاة", "قطة", "دجاجة", "أرنب"],
-  "أجزاء الجسم": ["ذراع", "بطن", "مؤخرة", "ذقن", "أذن", "كوع", "عين", "وجه", "إصبع", "قدم", "شعر", "يد", "ركبة", "ساق", "فم", "رقبة", "أنف", "أسنان", "إبهام"],
-  "الملابس": ["حزام", "أحذية", "معطف", "حفاض", "فستان", "قفازات", "قبعة", "سترة", "بيجاما", "بنطال", "قميص", "حذاء", "شبشب", "جوارب", "كنزة"],
-  "الأفعال": ["استحمام", "إفطار", "إحضار", "إمساك", "تصفيق", "إغلاق", "مجيء", "سعال", "قطع", "رقص", "عشاء", "أكل", "إطعام", "إنهاء", "إصلاح", "الحصول على", "إعطاء", "ذهاب", "مساعدة", "ضرب", "معانقة", "قفز", "ركل", "تقبيل", "طرق", "بحث", "حب", "غداء", "صنع", "غفوة", "خارج", "قراءة", "جري", "رؤية", "إظهار", "غناء", "جلوس", "نوم", "توقف", "أخذ", "رمي", "دغدغة", "مشي"]
+  "الطعام والشراب": ["تفاحة", "موز", "خبز", "زبدة", "كيك", "حلوى", "حبوب", "جبن", "رقائق", "قهوة", "بسكويت", "شراب", "بيض", "طعام", "عنب", "علكة", "هامبرغر", "آيس كريم", "عصير", "لحم", "حليب", "برتقال", "بيتزا", "مياه", "معكرونة", "شوربة"],
+  "الألعاب": ["كرة", "بالون", "مكعبات", "كتاب", "فقاعات", "دمية", "هدية", "زحليقة", "دبدوب"],
+  "الحيوانات": ["دب", "نحلة", "طائر", "بقرة", "كلب", "بطة", "فيل", "سمكة", "ضفدع", "حصان", "قرد", "خنزير", "جرو", "ثعبان", "نمر", "سلحفاة", "قطة", "دجاجة", "أرنب"],
+  "أجزاء الجسم": ["ذراع", "بطن", "ذقن", "أذن", "كوع", "عين", "وجه", "إصبع", "قدم", "شعر", "يد", "ركبة", "ساق", "فم", "رقبة", "أنف", "أسنان"],
+  "الأفعال": ["استحمام", "إفطار", "إحضار", "إمساك", "تصفيق", "إغلاق", "مجيء", "سعال", "قطع", "رقص", "عشاء", "أكل", "إطعام", "إنهاء", "إصلاح", "إعطاء", "ذهاب", "مساعدة", "ضرب", "معانقة", "قفز", "ركل", "تقبيل", "طرق", "بحث", "غداء", "صنع", "قراءة", "جري", "رؤية", "غناء", "جلوس", "نوم", "توقف", "أخذ", "رمي", "مشي"]
 };
 
-// 4. تحليل القواعد
-const morphologyData = [
-  { category: "الجمع", items: [
-    { ar: "يستخدم جمع المؤنث السالم (مثل: معلمات)" },
-    { ar: "يستخدم جمع المذكر السالم (مثل: معلمون)" },
-    { ar: "يستخدم جمع التكسير (مثل: كتب، أطفال)" }
-  ]},
-  { category: "الملكية", items: [
-    { ar: "يستخدم ضمائر الملكية المتصلة (مثل: كتابي، كتابك، كتابه)" },
-    { ar: "يستخدم ضمائر الملكية المنفصلة (مثل: لي، لك، له)" }
-  ]},
-  { category: "أدوات التعريف", items: [
-    { ar: "يستخدم 'ال' التعريف بشكل صحيح (مثل: الولد)" },
-    { ar: "يستخدم التنكير بشكل صحيح (مثل: ولد)" }
-  ]},
-  { category: "الأفعال", items: [
-    { ar: "يستخدم الفعل المضارع (مثل: يلعب، يأكل)" },
-    { ar: "يستخدم الفعل الماضي (مثل: لعب، أكل)" },
-    { ar: "يستخدم فعل الأمر (مثل: العب، كل)" },
-    { ar: "يستخدم الأفعال الشاذة بشكل صحيح" }
-  ]},
-  { category: "الضمائر", items: [
-    { ar: "يستخدم ضمائر المتكلم (أنا، نحن)" },
-    { ar: "يستخدم ضمائر المخاطب (أنت، أنتم)" },
-    { ar: "يستخدم ضمائر الغائب (هو، هي، هم)" }
-  ]},
-  { category: "حروف الجر", items: [
-    { ar: "يستخدم 'في' بشكل صحيح" },
-    { ar: "يستخدم 'على' بشكل صحيح" },
-    { ar: "يستخدم 'تحت' بشكل صحيح" },
-    { ar: "يستخدم 'فوق' بشكل صحيح" },
-    { ar: "يستخدم 'خلف' و 'أمام' بشكل صحيح" },
-    { ar: "يستخدم 'بجانب' و 'بين' بشكل صحيح" }
-  ]}
-];
+const pragmaticsData = ["يأخذ الطفل دوره أثناء التواصل.", "يستمتع الطفل باللعب مع أطفال آخرين.", "يستمتع الطفل باللعب مع والديه.", "يلعب الطفل عادةً بمفرده.", "يتحدث الطفل أثناء أنشطة اللعب.", "يستخدم الطفل الإيماءات للتواصل.", "ينظر الطفل إلى المستمع عند التحدث.", "يروي الطفل تجارب واقعية أثناء المحادثة.", "يطرح الطفل أسئلة أثناء اللعب.", "يجيب الطفل عن أسئلة أثناء اللعب."];
 
-// ================= توليد الاستمارات =================
+const morphologyData = [
+  { category: "الجمع", items: ["يستخدم جمع المؤنث السالم", "يستخدم جمع المذكر السالم", "يستخدم جمع التكسير"] },
+  { category: "الملكية", items: ["يستخدم ضمائر الملكية المتصلة", "يستخدم ضمائر الملكية المنفصلة"] },
+  { category: "الأفعال", items: ["يستخدم الفعل المضارع", "يستخدم الفعل الماضي", "يستخدم فعل الأمر"] },
+  { category: "الضمائر", items: ["يستخدم ضمائر المتكلم", "يستخدم ضمائر المخاطب", "يستخدم ضمائر الغائب"] },
+  { category: "حروف الجر", items: ["يستخدم 'في' بشكل صحيح", "يستخدم 'على' بشكل صحيح", "يستخدم 'تحت' بشكل صحيح", "يستخدم 'فوق' بشكل صحيح"] }
+];
 
 function openTab(tabId) {
   document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
-  event.target.classList.add('active');
+  if(event && event.target) event.target.classList.add('active');
 }
 
-// توليد استمارة الأهل
 function generateInterview() {
-  const container = document.getElementById('interviewQuestions');
-  container.innerHTML = '';
-  interviewData.forEach((q, i) => {
-    const div = document.createElement('div');
-    div.className = 'question-item';
-    div.innerHTML = `
-      <div class="question-text">${i+1}. ${q}</div>
-      <div class="radio-group">
-        <label><input type="radio" name="int_${i}" value="2"> نعم</label>
-        <label><input type="radio" name="int_${i}" value="1"> أحياناً</label>
-        <label><input type="radio" name="int_${i}" value="0"> لا</label>
-      </div>
-    `;
-    container.appendChild(div);
-  });
+  const c = document.getElementById('interviewQuestions'); c.innerHTML = '';
+  interviewData.forEach((q, i) => { c.innerHTML += `<div class="question-item"><div class="question-text">${i+1}. ${q}</div><div class="radio-group"><label><input type="radio" name="int_${i}" value="2"> نعم</label><label><input type="radio" name="int_${i}" value="1"> أحياناً</label><label><input type="radio" name="int_${i}" value="0"> لا</label></div></div>`; });
 }
 
-// توليد جرد النمو
 function generateInventory() {
-  const container = document.getElementById('inventoryContainer');
-  container.innerHTML = '';
-  inventoryData.forEach((q, i) => {
-    const div = document.createElement('div');
-    div.className = 'question-item';
-    div.innerHTML = `
-      <div class="question-text">${i+1}. ${q}</div>
-      <div class="radio-group">
-        <label><input type="radio" name="inv_${i}" value="2"> يوجد</label>
-        <label><input type="radio" name="inv_${i}" value="1"> أحياناً</label>
-        <label><input type="radio" name="inv_${i}" value="0"> لا يوجد</label>
-      </div>
-    `;
-    container.appendChild(div);
+  const c = document.getElementById('inventoryContainer'), noMsg = document.getElementById('noInventoryMessage');
+  if (childAgeInYears === 0) { c.innerHTML = ''; noMsg.style.display = 'block'; return; }
+  noMsg.style.display = 'none'; c.innerHTML = '';
+  inventoryData.forEach((group, gi) => {
+    if (childAgeInYears >= group.minAge) {
+      const isCurrent = (childAgeInYears >= group.minAge && childAgeInYears <= group.maxAge);
+      let gHTML = `<div class="age-group-title ${isCurrent ? 'current-age' : ''}">${group.ageGroup} ${isCurrent ? '(العمر الحالي)' : '(مراجعة)'}</div>`;
+      group.items.forEach((item, ii) => { gHTML += `<div class="question-item"><div class="question-text">${item}</div><div class="radio-group"><label><input type="radio" name="inv_${gi}_${ii}" value="2"> يوجد</label><label><input type="radio" name="inv_${gi}_${ii}" value="1"> أحياناً</label><label><input type="radio" name="inv_${gi}_${ii}" value="0"> لا يوجد</label></div></div>`; });
+      c.innerHTML += gHTML;
+    }
   });
 }
 
-// توليد مسح المفردات
 function generateVocab() {
-  const container = document.getElementById('vocabContainer');
-  container.innerHTML = '';
-  for (const [category, words] of Object.entries(vocabData)) {
-    const catDiv = document.createElement('div');
-    catDiv.innerHTML = `<div class="category-title">${category}</div>`;
-    const grid = document.createElement('div');
-    grid.className = 'words-grid';
-    words.forEach(word => {
-      const label = document.createElement('label');
-      label.className = 'word-item';
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.value = word;
-      checkbox.addEventListener('change', updateWordCount);
-      label.appendChild(checkbox);
-      label.appendChild(document.createTextNode(word));
-      grid.appendChild(label);
-    });
-    catDiv.appendChild(grid);
-    container.appendChild(catDiv);
+  const c = document.getElementById('vocabContainer'); c.innerHTML = '';
+  for (const [cat, words] of Object.entries(vocabData)) {
+    let h = `<div class="category-title">${cat}</div><div class="words-grid">`;
+    words.forEach(w => { h += `<label class="word-item"><input type="checkbox" value="${w}" onchange="updateWordCount()"> ${w}</label>`; });
+    h += `</div>`; c.innerHTML += h;
   }
 }
 
-function updateWordCount() {
-  const count = document.querySelectorAll('#vocabContainer input:checked').length;
-  document.getElementById('wordCount').textContent = count;
+function updateWordCount() { document.getElementById('wordCount').textContent = document.querySelectorAll('#vocabContainer input:checked').length; }
+
+function generatePragmatics() {
+  const c = document.getElementById('pragmaticsContainer'); c.innerHTML = '';
+  pragmaticsData.forEach((q, i) => { c.innerHTML += `<div class="question-item"><div class="question-text">${i+1}. ${q}</div><div class="radio-group"><label><input type="radio" name="prag_${i}" value="2"> نعم</label><label><input type="radio" name="prag_${i}" value="1"> أحياناً</label><label><input type="radio" name="prag_${i}" value="0"> لا</label></div></div>`; });
 }
 
-// توليد تحليل القواعد
 function generateMorphology() {
-  const container = document.getElementById('morphologyContainer');
-  container.innerHTML = '';
-  morphologyData.forEach((group, gi) => {
-    const groupDiv = document.createElement('div');
-    groupDiv.innerHTML = `<div class="category-title">${group.category}</div>`;
-    group.items.forEach((item, ii) => {
-      const div = document.createElement('div');
-      div.className = 'question-item';
-      div.innerHTML = `
-        <div class="question-text">${item.ar}</div>
-        <div class="radio-group">
-          <label><input type="radio" name="morph_${gi}_${ii}" value="1"> صحيح</label>
-          <label><input type="radio" name="morph_${gi}_${ii}" value="0"> خطأ</label>
-        </div>
-      `;
-      groupDiv.appendChild(div);
-    });
-    container.appendChild(groupDiv);
+  const c = document.getElementById('morphologyContainer'); c.innerHTML = '';
+  morphologyData.forEach((g, gi) => {
+    let h = `<div class="category-title">${g.category}</div>`;
+    g.items.forEach((item, ii) => { h += `<div class="question-item"><div class="question-text">${item}</div><div class="radio-group"><label><input type="radio" name="morph_${gi}_${ii}" value="1"> صحيح</label><label><input type="radio" name="morph_${gi}_${ii}" value="0"> خطأ</label></div></div>`; });
+    c.innerHTML += h;
   });
 }
 
-// ================= التقرير النهائي =================
+window.onload = function() { generateInterview(); generateInventory(); generateVocab(); generatePragmatics(); generateMorphology(); };
+</script>
+<script>
+function calculatePercentage(prefix, count) {
+  let score = 0, possible = 0;
+  for (let i = 0; i < count; i++) {
+    const sel = document.querySelector(`input[name="${prefix}_${i}"]:checked`);
+    if (sel) score += parseInt(sel.value);
+    possible += 2;
+  }
+  return possible > 0 ? (score / possible) * 100 : 0;
+}
 
 function generateReport() {
   const name = document.getElementById('childName').value || 'غير محدد';
-  const dob = document.getElementById('dob').value || 'غير محدد';
-  const evalDate = document.getElementById('evalDate').value || 'غير محدد';
-  const age = document.getElementById('age').value || 'غير محدد';
+  const ageDisplay = document.getElementById('ageDisplay').value || 'غير محدد';
   const complaint = document.getElementById('complaint').value || 'غير محدد';
   
+  // حساب النسب
   const totalWords = document.querySelectorAll('#vocabContainer input:checked').length;
+  const intPercent = calculatePercentage('int', interviewData.length);
+  const pragPercent = calculatePercentage('prag', pragmaticsData.length);
   
-  let invScore = 0;
-  let invPossible = 0;
-  inventoryData.forEach((_, i) => {
-    const selected = document.querySelector(`input[name="inv_${i}"]:checked`);
-    if (selected) invScore += parseInt(selected.value);
-    invPossible += 2;
+  let invScore = 0, invPossible = 0;
+  inventoryData.forEach((group, gi) => {
+    if (childAgeInYears >= group.minAge) {
+      group.items.forEach((_, ii) => {
+        const sel = document.querySelector(`input[name="inv_${gi}_${ii}"]:checked`);
+        if (sel) invScore += parseInt(sel.value);
+        invPossible += 2;
+      });
+    }
   });
-  const invPercentage = invPossible > 0 ? (invScore / invPossible) * 100 : 0;
+  const invPercent = invPossible > 0 ? (invScore / invPossible) * 100 : 0;
 
-  let morphScore = 0;
-  let morphPossible = 0;
+  let morphScore = 0, morphPossible = 0;
   morphologyData.forEach((group, gi) => {
     group.items.forEach((_, ii) => {
-      const selected = document.querySelector(`input[name="morph_${gi}_${ii}"]:checked`);
-      if (selected) morphScore += parseInt(selected.value);
+      const sel = document.querySelector(`input[name="morph_${gi}_${ii}"]:checked`);
+      if (sel) morphScore += parseInt(sel.value);
       morphPossible += 1;
     });
   });
-  const morphPercentage = morphPossible > 0 ? (morphScore / morphPossible) * 100 : 0;
+  const morphPercent = morphPossible > 0 ? (morphScore / morphPossible) * 100 : 0;
 
-  let intScore = 0;
-  let intPossible = 0;
-  interviewData.forEach((_, i) => {
-    const selected = document.querySelector(`input[name="int_${i}"]:checked`);
-    if (selected) intScore += parseInt(selected.value);
-    intPossible += 2;
-  });
-  const intPercentage = intPossible > 0 ? (intScore / intPossible) * 100 : 0;
+  // محرك التشخيص
+  let diagnosis = "";
+  let reason = "";
+
+  if (pragPercent < 50 && invPercent < 60) {
+    diagnosis = "اشتباه اضطراب طيف التوحد أو اضطراب التواصل الاجتماعي (Pragmatic/Social Communication Disorder)";
+    reason = "ضعف واضح في المهارات البرجماتية والتفاعل الاجتماعي، مع تأخر في النمو اللغوي.";
+  } else if (pragPercent < 60) {
+    diagnosis = "اضطراب التواصل الاجتماعي (البرجماتي) (Social Communication Disorder)";
+    reason = "ضعف في استخدام اللغة في السياق الاجتماعي، مع سلامة نسبية في المفردات والقواعد.";
+  } else if (invPercent < 50 && intPercent < 50) {
+    diagnosis = "اضطراب اللغة المختلط (Mixed Receptive-Expressive Language Disorder)";
+    reason = "تأخر شامل في الفهم والتعبير اللغوي بناءً على التاريخ اللغوي وجرد النمو.";
+  } else if (invPercent < 60) {
+    diagnosis = "تأخر لغوي بسيط إلى متوسط (Mild-Moderate Language Delay)";
+    reason = "وجود تأخر في بعض مهارات النمو اللغوي مقارنة بالعمر الزمني.";
+  } else if (morphPercent < 50 && totalWords > 50) {
+    diagnosis = "اضطراب لغوي تعبيري (Expressive Language Disorder)";
+    reason = "حصيلة المفردات جيدة، ولكن هناك ضعف في القواعد النحوية (Morphology).";
+  } else {
+    diagnosis = "نمو لغوي ضمن الحدود الطبيعية (Normal Language Development)";
+    reason = "المستفيد يظهر مهارات لغوية وبرجماتية جيدة مقارنة بعمره.";
+  }
 
   const reportHTML = `
     <div style="padding:20px; background:white; border:1px solid #ccc; border-radius:8px;">
       <h2 style="text-align:center; color:#0f766e; margin-bottom:20px;">تقرير التقييم الشامل</h2>
-      
       <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px;">1. بيانات المستفيد</h3>
       <p><strong>الاسم:</strong> ${name}</p>
-      <p><strong>تاريخ الميلاد:</strong> ${dob}</p>
-      <p><strong>تاريخ التقييم:</strong> ${evalDate}</p>
-      <p><strong>العمر الزمني:</strong> ${age}</p>
+      <p><strong>العمر الزمني:</strong> ${ageDisplay}</p>
       <p><strong>الشكوى الرئيسية:</strong> ${complaint}</p>
-
-      <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px; margin-top:20px;">2. ملخص النتائج</h3>
+      
+      <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px; margin-top:20px;">2. لوحة النتائج (Dashboard)</h3>
       <table style="width:100%; border-collapse:collapse; margin-top:10px;">
-        <tr style="background:#f0fdfa;"><th style="border:1px solid #ccc; padding:8px;">المجال</th><th style="border:1px solid #ccc; padding:8px;">النتيجة</th></tr>
-        <tr><td style="border:1px solid #ccc; padding:8px;">التاريخ اللغوي (الأهل)</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${intPercentage.toFixed(1)}%</td></tr>
-        <tr><td style="border:1px solid #ccc; padding:8px;">جرد النمو اللغوي</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${invPercentage.toFixed(1)}%</td></tr>
-        <tr><td style="border:1px solid #ccc; padding:8px;">مسح المفردات (عدد الكلمات)</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${totalWords} كلمة</td></tr>
-        <tr><td style="border:1px solid #ccc; padding:8px;">تحليل القواعد (نسبة الدقة)</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${morphPercentage.toFixed(1)}%</td></tr>
+        <tr style="background:#f0fdfa;"><th style="border:1px solid #ccc; padding:8px;">المجال</th><th style="border:1px solid #ccc; padding:8px;">النسبة</th></tr>
+        <tr><td style="border:1px solid #ccc; padding:8px;">التاريخ اللغوي (الأهل)</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${intPercent.toFixed(1)}%</td></tr>
+        <tr><td style="border:1px solid #ccc; padding:8px;">جرد النمو اللغوي</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${invPercent.toFixed(1)}%</td></tr>
+        <tr><td style="border:1px solid #ccc; padding:8px;">المهارات البرجماتية</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${pragPercent.toFixed(1)}%</td></tr>
+        <tr><td style="border:1px solid #ccc; padding:8px;">تحليل القواعد</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${morphPercent.toFixed(1)}%</td></tr>
+        <tr><td style="border:1px solid #ccc; padding:8px;">عدد المفردات</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${totalWords} كلمة</td></tr>
       </table>
 
-      <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px; margin-top:20px;">3. التوصيات المبدئية</h3>
+      <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px; margin-top:20px;">3. التشخيص المحتمل</h3>
+      <div style="padding:15px; background:#f0fdfa; border-right:4px solid #0f766e; border-radius:4px; margin-top:10px;">
+          <p><strong>التشخيص:</strong> ${diagnosis}</p>
+          <p><strong>السبب:</strong> ${reason}</p>
+      </div>
+
+      <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px; margin-top:20px;">4. التوصيات</h3>
       <ul style="padding-right:20px; margin-top:10px;">
-        ${totalWords < 50 ? '<li>يوصى بزيادة الحصيلة اللغوية من خلال القراءة واللعب التفاعلي.</li>' : ''}
-        ${invPercentage < 70 ? '<li>يوصى بتدريب مهارات النمو اللغوي الأساسية.</li>' : ''}
-        ${morphPercentage < 70 ? '<li>يوصى بتدريب القواعد النحوية والصرفية بشكل مباشر.</li>' : ''}
-        ${intPercentage < 70 ? '<li>يوصى بمراجعة التاريخ اللغوي مع الأهل وتقديم إرشادات منزلية.</li>' : ''}
-        ${totalWords >= 50 && invPercentage >= 70 && morphPercentage >= 70 ? '<li>المستفيد يظهر مهارات لغوية جيدة، يوصى بالمراقبة الدورية.</li>' : ''}
+         <li>إجراء تقييم رسمي (Standardized Test) لتأكيد التشخيص.</li>
+         <li>تصميم خطة تدخل بناءً على المجالات التي حصلت على أقل من 60%.</li>
+         <li>متابعة دورية بعد 3 أشهر.</li>
       </ul>
-      
       <p style="margin-top:30px; text-align:center; font-weight:bold; color:#0f766e;">تم التقييم بواسطة: Adham Salloum</p>
     </div>
   `;
@@ -407,22 +331,17 @@ function generateReport() {
   reportArea.innerHTML = reportHTML;
   reportArea.style.display = 'block';
   
-  const printBtn = document.createElement('button');
-  printBtn.className = 'action-btn no-print';
-  printBtn.textContent = '🖨️ طباعة التقرير / حفظ PDF';
-  printBtn.onclick = () => window.print();
-  printBtn.style.marginTop = '20px';
-  reportArea.appendChild(printBtn);
-
+  if (!document.getElementById('printBtn')) {
+    const printBtn = document.createElement('button');
+    printBtn.id = 'printBtn';
+    printBtn.className = 'action-btn no-print';
+    printBtn.textContent = '🖨️ طباعة التقرير / حفظ PDF';
+    printBtn.onclick = () => window.print();
+    printBtn.style.marginTop = '20px';
+    reportArea.appendChild(printBtn);
+  }
   reportArea.scrollIntoView({ behavior: 'smooth' });
 }
-
-window.onload = function() {
-  generateInterview();
-  generateInventory();
-  generateVocab();
-  generateMorphology();
-};
 </script>
 </body>
 </html>
