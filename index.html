@@ -29,7 +29,6 @@
   input[type="text"], input[type="number"], input[type="date"], textarea, select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; font-family: inherit; margin-bottom: 15px; }
   textarea { min-height: 80px; resize: vertical; }
 
-  /* تنسيقات النماذج */
   .question-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px; border-bottom: 1px solid #eee; gap: 15px; }
   .question-text { flex: 1; font-size: 14px; font-weight: 500; }
   .radio-group { display: flex; gap: 15px; flex-shrink: 0; }
@@ -66,13 +65,12 @@
     <p>إعداد: أخصائي تقويم كلام ولغة Adham Salloum</p>
   </header>
 
-  <!-- التبويبات -->
   <div class="tabs no-print">
     <button class="tab-btn active" onclick="openTab('tab-data')">1. بيانات المستفيد</button>
-    <button class="tab-btn" onclick="openTab('tab-interview')">2. استمارة الأهل (8-2)</button>
-    <button class="tab-btn" onclick="openTab('tab-vocab')">3. مسح المفردات (8-4)</button>
-    <button class="tab-btn" onclick="openTab('tab-informal')">4. التقييم غير الرسمي (8-5)</button>
-    <button class="tab-btn" onclick="openTab('tab-morphology')">5. تحليل القواعد (8-7)</button>
+    <button class="tab-btn" onclick="openTab('tab-interview')">2. التاريخ اللغوي (الأهل)</button>
+    <button class="tab-btn" onclick="openTab('tab-inventory')">3. جرد النمو اللغوي</button>
+    <button class="tab-btn" onclick="openTab('tab-vocab')">4. مسح المفردات</button>
+    <button class="tab-btn" onclick="openTab('tab-morphology')">5. تحليل القواعد</button>
     <button class="tab-btn" onclick="openTab('tab-report')">6. التقرير النهائي</button>
   </div>
 
@@ -91,18 +89,27 @@
     </div>
   </div>
 
-  <!-- 2. استمارة الأهل -->
+  <!-- 2. التاريخ اللغوي -->
   <div id="tab-interview" class="tab-content">
     <div class="card">
-      <h2>استمارة الأهل للتاريخ اللغوي (Form 8-2)</h2>
+      <h2>التاريخ اللغوي واستمارة الأهل</h2>
       <div id="interviewQuestions"></div>
     </div>
   </div>
 
-  <!-- 3. مسح المفردات -->
+  <!-- 3. جرد النمو اللغوي -->
+  <div id="tab-inventory" class="tab-content">
+    <div class="card">
+      <h2>جرد النمو اللغوي (مهارات التواصل)</h2>
+      <p style="font-size:13px; color:#666; margin-bottom:15px;">يرجى تحديد ما إذا كان الطفل يمتلك هذه المهارات.</p>
+      <div id="inventoryContainer"></div>
+    </div>
+  </div>
+
+  <!-- 4. مسح المفردات -->
   <div id="tab-vocab" class="tab-content">
     <div class="card">
-      <h2>مسح المفردات اللغوية (Form 8-4)</h2>
+      <h2>مسح المفردات اللغوية</h2>
       <p style="font-size:13px; color:#666; margin-bottom:15px;">يرجى تحديد الكلمات التي ينطقها الطفل تلقائياً.</p>
       <div id="vocabContainer"></div>
       <div class="summary-box" id="summaryBox">
@@ -111,19 +118,10 @@
     </div>
   </div>
 
-  <!-- 4. التقييم غير الرسمي -->
-  <div id="tab-informal" class="tab-content">
-    <div class="card">
-      <h2>التقييم غير الرسمي للغة (Form 8-5)</h2>
-      <p style="font-size:13px; color:#666; margin-bottom:15px;">يرجى تحديد السلوكيات التي يظهرها الطفل.</p>
-      <div id="informalContainer"></div>
-    </div>
-  </div>
-
   <!-- 5. تحليل القواعد -->
   <div id="tab-morphology" class="tab-content">
     <div class="card">
-      <h2>تحليل القواعد النحوية والصرفية (Form 8-7)</h2>
+      <h2>تحليل القواعد النحوية والصرفية</h2>
       <p style="font-size:13px; color:#666; margin-bottom:15px;">يرجى تحديد ما إذا كان الطفل يستخدم هذه الصيغ بشكل صحيح.</p>
       <div id="morphologyContainer"></div>
     </div>
@@ -142,17 +140,15 @@
 <script>
 // ================= بيانات النماذج =================
 
-// 1. أسئلة استمارة الأهل (Form 8-2)
+// 1. أسئلة استمارة الأهل (Intake Interview)
 const interviewData = [
   "هل تفهم تواصل طفلك غير اللفظي (مثل الإشارة، البكاء)؟",
   "هل تفهم تواصل طفلك اللفظي؟",
-  "هل يذهب طفلك إلى الحضانة أو المدرسة؟",
   "هل يصدر طفلك أصواتاً كلامية؟",
   "هل يستخدم طفلك كلمات؟",
   "هل يدمج طفلك الكلمات (مثل: أريد ماء)؟",
   "هل يقلد طفلك تعابير الوجه؟",
   "هل يقلد طفلك أصوات الكلام؟",
-  "هل يقلد طفلك سلوكيات رآها سابقاً؟",
   "هل يشير طفلك إلى الأشياء المألوفة عند تسميتها؟",
   "هل يفهم طفلك ما تقوله له؟",
   "هل يجيب طفلك عن أسئلة بسيطة؟",
@@ -160,77 +156,71 @@ const interviewData = [
   "هل يحافظ طفلك على التواصل البصري معك بانتظام؟",
   "هل يبتسم طفلك بشكل متكرر؟",
   "هل يلعب طفلك بشكل جيد مع الآخرين؟",
-  "هل يلعب طفلك بشكل جيد بمفرده؟",
   "هل يفهم طفلك وظائف الأشياء (مثل: الكوب للشرب)؟",
   "هل يطرح طفلك أسئلة؟"
 ];
 
-// 2. مسح المفردات (Form 8-4)
+// 2. جرد النمو اللغوي (Milestones Inventory)
+const inventoryData = [
+  "يصدر أصواتاً هادئة وغرغرة وأصوات تعبير عن السعادة.",
+  "يستخدم بكاءً مختلفاً للتعبير عن احتياجات مختلفة.",
+  "يبتسم عند التحدث إليه.",
+  "يتعرف على الأصوات (يميز صوت الأم).",
+  "يوجه نظره نحو مصدر الصوت.",
+  "يفهم معنى 'لا' و'حار'.",
+  "يستجيب للطلبات البسيطة.",
+  "يفهم ويستجيب لاسمه.",
+  "يقلد كلمات فردية.",
+  "يتبع أوامر بسيطة.",
+  "يستخدم الكلمات أكثر من الرطانة.",
+  "لديه حصيلة تعبيرية من 50 إلى 100 كلمة.",
+  "يبدأ في دمج الأسماء مع الأفعال.",
+  "يبدأ في استخدام الضمائر.",
+  "الكلام مفهوم للغرباء بنسبة 50% إلى 75%.",
+  "يتبع أوامر من جزأين.",
+  "يستخدم عبارات من كلمتين إلى أربع كلمات.",
+  "يستمر في استخدام الترديد عند مواجهة صعوبات.",
+  "لديه حصيلة تعبيرية من 50 إلى 250 كلمة.",
+  "يفهم معظم ما يقال له."
+];
+
+// 3. مسح المفردات
 const vocabData = {
   "الطعام والشراب": ["تفاحة", "موز", "خبز", "زبدة", "كيك", "حلوى", "حبوب", "جبن", "رقائق", "قهوة", "بسكويت", "مقرمشات", "شراب", "بيض", "طعام", "عنب", "علكة", "هامبرغر", "هوت دوغ", "آيس كريم", "عصير", "لحم", "حليب", "برتقال", "بيتزا", "مياه", "معكرونة", "شوربة"],
   "الألعاب": ["كرة", "بالون", "مكعبات", "كتاب", "فقاعات", "طباشير", "دمية", "هدية", "زحليقة", "دبدوب", "أرجوحة"],
   "الحيوانات": ["دب", "نحلة", "طائر", "بقرة", "كلب", "بطة", "فيل", "سمكة", "ضفدع", "حصان", "قرد", "خنزير", "جرو", "ثعبان", "نمر", "ديك رومي", "سلحفاة", "قطة", "دجاجة", "أرنب"],
-  "أجزاء الجسم": ["ذراع", "بطن", "مؤخرة", "ذقن", "أذن", "كوع", "عين", "وجه", "إصبع", "قدم", "شعر", "يد", "ركبة", "ساق", "فم", "رقبة", "أنف", "أسنان", "إبهام", "بطن"],
+  "أجزاء الجسم": ["ذراع", "بطن", "مؤخرة", "ذقن", "أذن", "كوع", "عين", "وجه", "إصبع", "قدم", "شعر", "يد", "ركبة", "ساق", "فم", "رقبة", "أنف", "أسنان", "إبهام"],
   "الملابس": ["حزام", "أحذية", "معطف", "حفاض", "فستان", "قفازات", "قبعة", "سترة", "بيجاما", "بنطال", "قميص", "حذاء", "شبشب", "جوارب", "كنزة"],
   "الأفعال": ["استحمام", "إفطار", "إحضار", "إمساك", "تصفيق", "إغلاق", "مجيء", "سعال", "قطع", "رقص", "عشاء", "أكل", "إطعام", "إنهاء", "إصلاح", "الحصول على", "إعطاء", "ذهاب", "مساعدة", "ضرب", "معانقة", "قفز", "ركل", "تقبيل", "طرق", "بحث", "حب", "غداء", "صنع", "غفوة", "خارج", "قراءة", "جري", "رؤية", "إظهار", "غناء", "جلوس", "نوم", "توقف", "أخذ", "رمي", "دغدغة", "مشي"]
 };
 
-// 3. التقييم غير الرسمي (Form 8-5)
-const informalData = [
-  "يأخذ الطفل دوره أثناء التواصل",
-  "يستمتع الطفل باللعب مع أطفال آخرين",
-  "يستمتع الطفل باللعب مع والديه",
-  "يستمتع الطفل باللعب مع إخوته",
-  "يلعب الطفل عادةً بمفرده",
-  "يلعب الطفل بصمت",
-  "يتحدث الطفل أثناء أنشطة اللعب",
-  "يمثل الطفل أنشطة شائعة (مثل: يلعب بالمنزل، يلعب بالمتجر)",
-  "يستخدم الطفل أشياء مشابهة للأشياء الحقيقية (مثل: طاسة كطبل)",
-  "يستخدم الطفل الأشياء بطريقة واقعية (مثل: استخدام شاحنة قلابة بالطريقة الصحيحة)",
-  "ينظر الطفل إلى كتاب مصور صفحة بصفحة من الأمام إلى الخلف",
-  "يستكشف الطفل مجموعة متنوعة من الألعاب ولا يكرر استخدام نفس اللعبة",
-  "يستخدم الطفل حركات عضلية متناسقة",
-  "يستخدم الطفل جملاً كاملة أثناء اللعب",
-  "يطرح الطفل أسئلة أثناء اللعب",
-  "يجيب الطفل عن أسئلة أثناء اللعب",
-  "يستجيب الطفل للطلبات",
-  "يستخدم الطفل الإيماءات للتواصل بشكل أساسي",
-  "يستخدم الطفل الإيماءات والكلام للتواصل",
-  "ينظر الطفل إلى المستمع عند التحدث",
-  "يستخدم الطفل كلمات مفردات مناسبة",
-  "يروي الطفل تجارب واقعية أثناء المحادثة",
-  "يتواصل الطفل عادةً بعبارات تزيد عن كلمتين",
-  "يتواصل الطفل عادةً بعبارات تزيد عن ثلاث كلمات",
-  "يتواصل الطفل عادةً بعبارات تزيد عن أربع كلمات"
-];
-
-// 4. تحليل القواعد (Form 8-7)
+// 4. تحليل القواعد
 const morphologyData = [
-  { category: "الجمع (Plurals)", items: [
+  { category: "الجمع", items: [
     { ar: "يستخدم جمع المؤنث السالم (مثل: معلمات)" },
     { ar: "يستخدم جمع المذكر السالم (مثل: معلمون)" },
     { ar: "يستخدم جمع التكسير (مثل: كتب، أطفال)" }
   ]},
-  { category: "الملكية (Possessive)", items: [
+  { category: "الملكية", items: [
     { ar: "يستخدم ضمائر الملكية المتصلة (مثل: كتابي، كتابك، كتابه)" },
     { ar: "يستخدم ضمائر الملكية المنفصلة (مثل: لي، لك، له)" }
   ]},
-  { category: "أدوات التعريف (Articles)", items: [
+  { category: "أدوات التعريف", items: [
     { ar: "يستخدم 'ال' التعريف بشكل صحيح (مثل: الولد)" },
     { ar: "يستخدم التنكير بشكل صحيح (مثل: ولد)" }
   ]},
-  { category: "الأفعال (Verbs)", items: [
+  { category: "الأفعال", items: [
     { ar: "يستخدم الفعل المضارع (مثل: يلعب، يأكل)" },
     { ar: "يستخدم الفعل الماضي (مثل: لعب، أكل)" },
     { ar: "يستخدم فعل الأمر (مثل: العب، كل)" },
     { ar: "يستخدم الأفعال الشاذة بشكل صحيح" }
   ]},
-  { category: "الضمائر (Pronouns)", items: [
+  { category: "الضمائر", items: [
     { ar: "يستخدم ضمائر المتكلم (أنا، نحن)" },
     { ar: "يستخدم ضمائر المخاطب (أنت، أنتم)" },
     { ar: "يستخدم ضمائر الغائب (هو، هي، هم)" }
   ]},
-  { category: "حروف الجر (Prepositions)", items: [
+  { category: "حروف الجر", items: [
     { ar: "يستخدم 'في' بشكل صحيح" },
     { ar: "يستخدم 'على' بشكل صحيح" },
     { ar: "يستخدم 'تحت' بشكل صحيح" },
@@ -242,11 +232,9 @@ const morphologyData = [
 
 // ================= توليد الاستمارات =================
 
-// فتح التبويبات
 function openTab(tabId) {
   document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-  
   document.getElementById(tabId).classList.add('active');
   event.target.classList.add('active');
 }
@@ -264,6 +252,25 @@ function generateInterview() {
         <label><input type="radio" name="int_${i}" value="2"> نعم</label>
         <label><input type="radio" name="int_${i}" value="1"> أحياناً</label>
         <label><input type="radio" name="int_${i}" value="0"> لا</label>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// توليد جرد النمو
+function generateInventory() {
+  const container = document.getElementById('inventoryContainer');
+  container.innerHTML = '';
+  inventoryData.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'question-item';
+    div.innerHTML = `
+      <div class="question-text">${i+1}. ${q}</div>
+      <div class="radio-group">
+        <label><input type="radio" name="inv_${i}" value="2"> يوجد</label>
+        <label><input type="radio" name="inv_${i}" value="1"> أحياناً</label>
+        <label><input type="radio" name="inv_${i}" value="0"> لا يوجد</label>
       </div>
     `;
     container.appendChild(div);
@@ -300,25 +307,6 @@ function updateWordCount() {
   document.getElementById('wordCount').textContent = count;
 }
 
-// توليد التقييم غير الرسمي
-function generateInformal() {
-  const container = document.getElementById('informalContainer');
-  container.innerHTML = '';
-  informalData.forEach((q, i) => {
-    const div = document.createElement('div');
-    div.className = 'question-item';
-    div.innerHTML = `
-      <div class="question-text">${i+1}. ${q}</div>
-      <div class="radio-group">
-        <label><input type="radio" name="inf_${i}" value="2"> نعم</label>
-        <label><input type="radio" name="inf_${i}" value="1"> أحياناً</label>
-        <label><input type="radio" name="inf_${i}" value="0"> لا</label>
-      </div>
-    `;
-    container.appendChild(div);
-  });
-}
-
 // توليد تحليل القواعد
 function generateMorphology() {
   const container = document.getElementById('morphologyContainer');
@@ -345,27 +333,23 @@ function generateMorphology() {
 // ================= التقرير النهائي =================
 
 function generateReport() {
-  // جلب البيانات
   const name = document.getElementById('childName').value || 'غير محدد';
   const dob = document.getElementById('dob').value || 'غير محدد';
   const evalDate = document.getElementById('evalDate').value || 'غير محدد';
   const age = document.getElementById('age').value || 'غير محدد';
   const complaint = document.getElementById('complaint').value || 'غير محدد';
   
-  // حساب المفردات
   const totalWords = document.querySelectorAll('#vocabContainer input:checked').length;
   
-  // حساب التقييم غير الرسمي
-  let informalScore = 0;
-  let informalPossible = 0;
-  informalData.forEach((_, i) => {
-    const selected = document.querySelector(`input[name="inf_${i}"]:checked`);
-    if (selected) informalScore += parseInt(selected.value);
-    informalPossible += 2;
+  let invScore = 0;
+  let invPossible = 0;
+  inventoryData.forEach((_, i) => {
+    const selected = document.querySelector(`input[name="inv_${i}"]:checked`);
+    if (selected) invScore += parseInt(selected.value);
+    invPossible += 2;
   });
-  const informalPercentage = informalPossible > 0 ? (informalScore / informalPossible) * 100 : 0;
+  const invPercentage = invPossible > 0 ? (invScore / invPossible) * 100 : 0;
 
-  // حساب القواعد
   let morphScore = 0;
   let morphPossible = 0;
   morphologyData.forEach((group, gi) => {
@@ -377,7 +361,15 @@ function generateReport() {
   });
   const morphPercentage = morphPossible > 0 ? (morphScore / morphPossible) * 100 : 0;
 
-  // بناء التقرير
+  let intScore = 0;
+  let intPossible = 0;
+  interviewData.forEach((_, i) => {
+    const selected = document.querySelector(`input[name="int_${i}"]:checked`);
+    if (selected) intScore += parseInt(selected.value);
+    intPossible += 2;
+  });
+  const intPercentage = intPossible > 0 ? (intScore / intPossible) * 100 : 0;
+
   const reportHTML = `
     <div style="padding:20px; background:white; border:1px solid #ccc; border-radius:8px;">
       <h2 style="text-align:center; color:#0f766e; margin-bottom:20px;">تقرير التقييم الشامل</h2>
@@ -392,17 +384,19 @@ function generateReport() {
       <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px; margin-top:20px;">2. ملخص النتائج</h3>
       <table style="width:100%; border-collapse:collapse; margin-top:10px;">
         <tr style="background:#f0fdfa;"><th style="border:1px solid #ccc; padding:8px;">المجال</th><th style="border:1px solid #ccc; padding:8px;">النتيجة</th></tr>
+        <tr><td style="border:1px solid #ccc; padding:8px;">التاريخ اللغوي (الأهل)</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${intPercentage.toFixed(1)}%</td></tr>
+        <tr><td style="border:1px solid #ccc; padding:8px;">جرد النمو اللغوي</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${invPercentage.toFixed(1)}%</td></tr>
         <tr><td style="border:1px solid #ccc; padding:8px;">مسح المفردات (عدد الكلمات)</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${totalWords} كلمة</td></tr>
-        <tr><td style="border:1px solid #ccc; padding:8px;">التقييم غير الرسمي (نسبة المهارات)</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${informalPercentage.toFixed(1)}%</td></tr>
         <tr><td style="border:1px solid #ccc; padding:8px;">تحليل القواعد (نسبة الدقة)</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${morphPercentage.toFixed(1)}%</td></tr>
       </table>
 
       <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px; margin-top:20px;">3. التوصيات المبدئية</h3>
       <ul style="padding-right:20px; margin-top:10px;">
         ${totalWords < 50 ? '<li>يوصى بزيادة الحصيلة اللغوية من خلال القراءة واللعب التفاعلي.</li>' : ''}
-        ${informalPercentage < 70 ? '<li>يوصى بتدريب مهارات التواصل الاجتماعي واللعب التفاعلي.</li>' : ''}
+        ${invPercentage < 70 ? '<li>يوصى بتدريب مهارات النمو اللغوي الأساسية.</li>' : ''}
         ${morphPercentage < 70 ? '<li>يوصى بتدريب القواعد النحوية والصرفية بشكل مباشر.</li>' : ''}
-        ${totalWords >= 50 && informalPercentage >= 70 && morphPercentage >= 70 ? '<li>المستفيد يظهر مهارات لغوية جيدة، يوصى بالمراقبة الدورية.</li>' : ''}
+        ${intPercentage < 70 ? '<li>يوصى بمراجعة التاريخ اللغوي مع الأهل وتقديم إرشادات منزلية.</li>' : ''}
+        ${totalWords >= 50 && invPercentage >= 70 && morphPercentage >= 70 ? '<li>المستفيد يظهر مهارات لغوية جيدة، يوصى بالمراقبة الدورية.</li>' : ''}
       </ul>
       
       <p style="margin-top:30px; text-align:center; font-weight:bold; color:#0f766e;">تم التقييم بواسطة: Adham Salloum</p>
@@ -413,7 +407,6 @@ function generateReport() {
   reportArea.innerHTML = reportHTML;
   reportArea.style.display = 'block';
   
-  // إضافة زر الطباعة
   const printBtn = document.createElement('button');
   printBtn.className = 'action-btn no-print';
   printBtn.textContent = '🖨️ طباعة التقرير / حفظ PDF';
@@ -424,11 +417,10 @@ function generateReport() {
   reportArea.scrollIntoView({ behavior: 'smooth' });
 }
 
-// تشغيل التوليد عند تحميل الصفحة
 window.onload = function() {
   generateInterview();
+  generateInventory();
   generateVocab();
-  generateInformal();
   generateMorphology();
 };
 </script>
