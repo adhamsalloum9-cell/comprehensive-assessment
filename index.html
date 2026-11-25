@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نظام التقييم الشامل | Adham Salloum</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+  body { background-color: #f8fafc; color: #1e293b; line-height: 1.6; padding: 20px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 20px; padding: 20px; background: #0f766e; color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+  header h1 { font-size: 24px; margin-bottom: 8px; }
+  header p { font-size: 14px; opacity: 0.9; }
+  
+  /* التبويبات */
+  .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .tab-btn { padding: 10px 15px; border: none; border-radius: 8px; background: #e2e8f0; color: #475569; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 14px; }
+  .tab-btn:hover { background: #cbd5e1; }
+  .tab-btn.active { background: #0f766e; color: white; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
+  .card h2 { font-size: 18px; color: #0f766e; margin-bottom: 15px; border-bottom: 2px solid #ccfbf1; padding-bottom: 8px; }
+  
+  label { display: block; font-size: 15px; font-weight: 600; margin-bottom: 5px; color: #475569; }
+  input[type="text"], input[type="number"], input[type="date"], textarea, select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; font-family: inherit; margin-bottom: 15px; }
+  textarea { min-height: 80px; resize: vertical; }
+
+  /* تنسيقات النماذج */
+  .question-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px; border-bottom: 1px solid #eee; gap: 15px; }
+  .question-text { flex: 1; font-size: 14px; font-weight: 500; }
+  .radio-group { display: flex; gap: 15px; flex-shrink: 0; }
+  .radio-group label { font-weight: normal; display: flex; align-items: center; gap: 5px; cursor: pointer; margin-bottom: 0; font-size: 14px; }
+  input[type="radio"], input[type="checkbox"] { width: 20px; height: 20px; accent-color: #0f766e; margin: 0; cursor: pointer; }
+
+  .words-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
+  .word-item { display: flex; align-items: center; gap: 8px; padding: 5px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  
+  .category-title { font-size: 16px; font-weight: 700; color: #0f766e; margin: 20px 0 10px; padding: 8px; background: #f0fdfa; border-radius: 8px; border-right: 4px solid #0f766e; }
+
+  .summary-box { background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; margin-top: 20px; text-align: center; font-size: 16px; font-weight: bold; color: #0f766e; }
+
+  button.action-btn { padding: 14px 30px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; font-size: 16px; background: #0f766e; color: white; transition: 0.2s; width: 100%; margin-top: 10px; }
+  button.action-btn:hover { background: #115e59; }
+  
+  .result-area { display: none; margin-top: 30px; padding: 20px; border-radius: 12px; border: 2px solid #0f766e; background: #f0fdfa; }
+  .result-area h3 { color: #0f766e; font-size: 22px; margin-bottom: 15px; border-bottom: 2px solid #0f766e; padding-bottom: 8px; }
+  .recommendation { background: #fff; padding: 15px; border-radius: 8px; border-right: 4px solid #0f766e; font-size: 15px; margin-bottom: 15px; }
+
+  @media print {
+    body { background: white; padding: 0; font-family: Arial, sans-serif; }
+    .tabs, .no-print, header p { display: none !important; }
+    .tab-content { display: block !important; page-break-after: always; }
+    .card { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>نظام التقييم الشامل للغة والنطق</h1>
+    <p>بناءً على Assessment of Spoken Language in Children</p>
+    <p>إعداد: أخصائي تقويم كلام ولغة Adham Salloum</p>
+  </header>
+
+  <!-- التبويبات -->
+  <div class="tabs no-print">
+    <button class="tab-btn active" onclick="openTab('tab-data')">1. بيانات المستفيد</button>
+    <button class="tab-btn" onclick="openTab('tab-interview')">2. استمارة الأهل (8-2)</button>
+    <button class="tab-btn" onclick="openTab('tab-vocab')">3. مسح المفردات (8-4)</button>
+    <button class="tab-btn" onclick="openTab('tab-informal')">4. التقييم غير الرسمي (8-5)</button>
+    <button class="tab-btn" onclick="openTab('tab-morphology')">5. تحليل القواعد (8-7)</button>
+    <button class="tab-btn" onclick="openTab('tab-report')">6. التقرير النهائي</button>
+  </div>
+
+  <!-- 1. بيانات المستفيد -->
+  <div id="tab-data" class="tab-content active">
+    <div class="card">
+      <h2>بيانات المستفيد</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+        <div><label>اسم المستفيد:</label><input type="text" id="childName" placeholder="..."></div>
+        <div><label>تاريخ الميلاد:</label><input type="date" id="dob"></div>
+        <div><label>تاريخ التقييم:</label><input type="date" id="evalDate"></div>
+        <div><label>العمر الزمني:</label><input type="text" id="age" placeholder="..."></div>
+        <div><label>اسم الأخصائي:</label><input type="text" id="therapist" value="Adham Salloum"></div>
+        <div><label>الشكوى الرئيسية:</label><input type="text" id="complaint" placeholder="..."></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. استمارة الأهل -->
+  <div id="tab-interview" class="tab-content">
+    <div class="card">
+      <h2>استمارة الأهل للتاريخ اللغوي (Form 8-2)</h2>
+      <div id="interviewQuestions"></div>
+    </div>
+  </div>
+
+  <!-- 3. مسح المفردات -->
+  <div id="tab-vocab" class="tab-content">
+    <div class="card">
+      <h2>مسح المفردات اللغوية (Form 8-4)</h2>
+      <p style="font-size:13px; color:#666; margin-bottom:15px;">يرجى تحديد الكلمات التي ينطقها الطفل تلقائياً.</p>
+      <div id="vocabContainer"></div>
+      <div class="summary-box" id="summaryBox">
+        إجمالي الكلمات المنطوقة: <span id="wordCount">0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. التقييم غير الرسمي -->
+  <div id="tab-informal" class="tab-content">
+    <div class="card">
+      <h2>التقييم غير الرسمي للغة (Form 8-5)</h2>
+      <p style="font-size:13px; color:#666; margin-bottom:15px;">يرجى تحديد السلوكيات التي يظهرها الطفل.</p>
+      <div id="informalContainer"></div>
+    </div>
+  </div>
+
+  <!-- 5. تحليل القواعد -->
+  <div id="tab-morphology" class="tab-content">
+    <div class="card">
+      <h2>تحليل القواعد النحوية والصرفية (Form 8-7)</h2>
+      <p style="font-size:13px; color:#666; margin-bottom:15px;">يرجى تحديد ما إذا كان الطفل يستخدم هذه الصيغ بشكل صحيح.</p>
+      <div id="morphologyContainer"></div>
+    </div>
+  </div>
+
+  <!-- 6. التقرير النهائي -->
+  <div id="tab-report" class="tab-content">
+    <div class="card">
+      <h2>توليد التقرير النهائي</h2>
+      <button class="action-btn no-print" onclick="generateReport()">📄 إنشاء التقرير الشامل</button>
+      <div id="reportArea" style="display:none; margin-top:20px;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ================= بيانات النماذج =================
+
+// 1. أسئلة استمارة الأهل (Form 8-2)
+const interviewData = [
+  "هل تفهم تواصل طفلك غير اللفظي (مثل الإشارة، البكاء)؟",
+  "هل تفهم تواصل طفلك اللفظي؟",
+  "هل يذهب طفلك إلى الحضانة أو المدرسة؟",
+  "هل يصدر طفلك أصواتاً كلامية؟",
+  "هل يستخدم طفلك كلمات؟",
+  "هل يدمج طفلك الكلمات (مثل: أريد ماء)؟",
+  "هل يقلد طفلك تعابير الوجه؟",
+  "هل يقلد طفلك أصوات الكلام؟",
+  "هل يقلد طفلك سلوكيات رآها سابقاً؟",
+  "هل يشير طفلك إلى الأشياء المألوفة عند تسميتها؟",
+  "هل يفهم طفلك ما تقوله له؟",
+  "هل يجيب طفلك عن أسئلة بسيطة؟",
+  "هل يستجيب طفلك للأوامر البسيطة (مثل: أحضر كوبك)؟",
+  "هل يحافظ طفلك على التواصل البصري معك بانتظام؟",
+  "هل يبتسم طفلك بشكل متكرر؟",
+  "هل يلعب طفلك بشكل جيد مع الآخرين؟",
+  "هل يلعب طفلك بشكل جيد بمفرده؟",
+  "هل يفهم طفلك وظائف الأشياء (مثل: الكوب للشرب)؟",
+  "هل يطرح طفلك أسئلة؟"
+];
+
+// 2. مسح المفردات (Form 8-4)
+const vocabData = {
+  "الطعام والشراب": ["تفاحة", "موز", "خبز", "زبدة", "كيك", "حلوى", "حبوب", "جبن", "رقائق", "قهوة", "بسكويت", "مقرمشات", "شراب", "بيض", "طعام", "عنب", "علكة", "هامبرغر", "هوت دوغ", "آيس كريم", "عصير", "لحم", "حليب", "برتقال", "بيتزا", "مياه", "معكرونة", "شوربة"],
+  "الألعاب": ["كرة", "بالون", "مكعبات", "كتاب", "فقاعات", "طباشير", "دمية", "هدية", "زحليقة", "دبدوب", "أرجوحة"],
+  "الحيوانات": ["دب", "نحلة", "طائر", "بقرة", "كلب", "بطة", "فيل", "سمكة", "ضفدع", "حصان", "قرد", "خنزير", "جرو", "ثعبان", "نمر", "ديك رومي", "سلحفاة", "قطة", "دجاجة", "أرنب"],
+  "أجزاء الجسم": ["ذراع", "بطن", "مؤخرة", "ذقن", "أذن", "كوع", "عين", "وجه", "إصبع", "قدم", "شعر", "يد", "ركبة", "ساق", "فم", "رقبة", "أنف", "أسنان", "إبهام", "بطن"],
+  "الملابس": ["حزام", "أحذية", "معطف", "حفاض", "فستان", "قفازات", "قبعة", "سترة", "بيجاما", "بنطال", "قميص", "حذاء", "شبشب", "جوارب", "كنزة"],
+  "الأفعال": ["استحمام", "إفطار", "إحضار", "إمساك", "تصفيق", "إغلاق", "مجيء", "سعال", "قطع", "رقص", "عشاء", "أكل", "إطعام", "إنهاء", "إصلاح", "الحصول على", "إعطاء", "ذهاب", "مساعدة", "ضرب", "معانقة", "قفز", "ركل", "تقبيل", "طرق", "بحث", "حب", "غداء", "صنع", "غفوة", "خارج", "قراءة", "جري", "رؤية", "إظهار", "غناء", "جلوس", "نوم", "توقف", "أخذ", "رمي", "دغدغة", "مشي"]
+};
+
+// 3. التقييم غير الرسمي (Form 8-5)
+const informalData = [
+  "يأخذ الطفل دوره أثناء التواصل",
+  "يستمتع الطفل باللعب مع أطفال آخرين",
+  "يستمتع الطفل باللعب مع والديه",
+  "يستمتع الطفل باللعب مع إخوته",
+  "يلعب الطفل عادةً بمفرده",
+  "يلعب الطفل بصمت",
+  "يتحدث الطفل أثناء أنشطة اللعب",
+  "يمثل الطفل أنشطة شائعة (مثل: يلعب بالمنزل، يلعب بالمتجر)",
+  "يستخدم الطفل أشياء مشابهة للأشياء الحقيقية (مثل: طاسة كطبل)",
+  "يستخدم الطفل الأشياء بطريقة واقعية (مثل: استخدام شاحنة قلابة بالطريقة الصحيحة)",
+  "ينظر الطفل إلى كتاب مصور صفحة بصفحة من الأمام إلى الخلف",
+  "يستكشف الطفل مجموعة متنوعة من الألعاب ولا يكرر استخدام نفس اللعبة",
+  "يستخدم الطفل حركات عضلية متناسقة",
+  "يستخدم الطفل جملاً كاملة أثناء اللعب",
+  "يطرح الطفل أسئلة أثناء اللعب",
+  "يجيب الطفل عن أسئلة أثناء اللعب",
+  "يستجيب الطفل للطلبات",
+  "يستخدم الطفل الإيماءات للتواصل بشكل أساسي",
+  "يستخدم الطفل الإيماءات والكلام للتواصل",
+  "ينظر الطفل إلى المستمع عند التحدث",
+  "يستخدم الطفل كلمات مفردات مناسبة",
+  "يروي الطفل تجارب واقعية أثناء المحادثة",
+  "يتواصل الطفل عادةً بعبارات تزيد عن كلمتين",
+  "يتواصل الطفل عادةً بعبارات تزيد عن ثلاث كلمات",
+  "يتواصل الطفل عادةً بعبارات تزيد عن أربع كلمات"
+];
+
+// 4. تحليل القواعد (Form 8-7)
+const morphologyData = [
+  { category: "الجمع (Plurals)", items: [
+    { ar: "يستخدم جمع المؤنث السالم (مثل: معلمات)" },
+    { ar: "يستخدم جمع المذكر السالم (مثل: معلمون)" },
+    { ar: "يستخدم جمع التكسير (مثل: كتب، أطفال)" }
+  ]},
+  { category: "الملكية (Possessive)", items: [
+    { ar: "يستخدم ضمائر الملكية المتصلة (مثل: كتابي، كتابك، كتابه)" },
+    { ar: "يستخدم ضمائر الملكية المنفصلة (مثل: لي، لك، له)" }
+  ]},
+  { category: "أدوات التعريف (Articles)", items: [
+    { ar: "يستخدم 'ال' التعريف بشكل صحيح (مثل: الولد)" },
+    { ar: "يستخدم التنكير بشكل صحيح (مثل: ولد)" }
+  ]},
+  { category: "الأفعال (Verbs)", items: [
+    { ar: "يستخدم الفعل المضارع (مثل: يلعب، يأكل)" },
+    { ar: "يستخدم الفعل الماضي (مثل: لعب، أكل)" },
+    { ar: "يستخدم فعل الأمر (مثل: العب، كل)" },
+    { ar: "يستخدم الأفعال الشاذة بشكل صحيح" }
+  ]},
+  { category: "الضمائر (Pronouns)", items: [
+    { ar: "يستخدم ضمائر المتكلم (أنا، نحن)" },
+    { ar: "يستخدم ضمائر المخاطب (أنت، أنتم)" },
+    { ar: "يستخدم ضمائر الغائب (هو، هي، هم)" }
+  ]},
+  { category: "حروف الجر (Prepositions)", items: [
+    { ar: "يستخدم 'في' بشكل صحيح" },
+    { ar: "يستخدم 'على' بشكل صحيح" },
+    { ar: "يستخدم 'تحت' بشكل صحيح" },
+    { ar: "يستخدم 'فوق' بشكل صحيح" },
+    { ar: "يستخدم 'خلف' و 'أمام' بشكل صحيح" },
+    { ar: "يستخدم 'بجانب' و 'بين' بشكل صحيح" }
+  ]}
+];
+
+// ================= توليد الاستمارات =================
+
+// فتح التبويبات
+function openTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// توليد استمارة الأهل
+function generateInterview() {
+  const container = document.getElementById('interviewQuestions');
+  container.innerHTML = '';
+  interviewData.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'question-item';
+    div.innerHTML = `
+      <div class="question-text">${i+1}. ${q}</div>
+      <div class="radio-group">
+        <label><input type="radio" name="int_${i}" value="2"> نعم</label>
+        <label><input type="radio" name="int_${i}" value="1"> أحياناً</label>
+        <label><input type="radio" name="int_${i}" value="0"> لا</label>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// توليد مسح المفردات
+function generateVocab() {
+  const container = document.getElementById('vocabContainer');
+  container.innerHTML = '';
+  for (const [category, words] of Object.entries(vocabData)) {
+    const catDiv = document.createElement('div');
+    catDiv.innerHTML = `<div class="category-title">${category}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'words-grid';
+    words.forEach(word => {
+      const label = document.createElement('label');
+      label.className = 'word-item';
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.value = word;
+      checkbox.addEventListener('change', updateWordCount);
+      label.appendChild(checkbox);
+      label.appendChild(document.createTextNode(word));
+      grid.appendChild(label);
+    });
+    catDiv.appendChild(grid);
+    container.appendChild(catDiv);
+  }
+}
+
+function updateWordCount() {
+  const count = document.querySelectorAll('#vocabContainer input:checked').length;
+  document.getElementById('wordCount').textContent = count;
+}
+
+// توليد التقييم غير الرسمي
+function generateInformal() {
+  const container = document.getElementById('informalContainer');
+  container.innerHTML = '';
+  informalData.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'question-item';
+    div.innerHTML = `
+      <div class="question-text">${i+1}. ${q}</div>
+      <div class="radio-group">
+        <label><input type="radio" name="inf_${i}" value="2"> نعم</label>
+        <label><input type="radio" name="inf_${i}" value="1"> أحياناً</label>
+        <label><input type="radio" name="inf_${i}" value="0"> لا</label>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// توليد تحليل القواعد
+function generateMorphology() {
+  const container = document.getElementById('morphologyContainer');
+  container.innerHTML = '';
+  morphologyData.forEach((group, gi) => {
+    const groupDiv = document.createElement('div');
+    groupDiv.innerHTML = `<div class="category-title">${group.category}</div>`;
+    group.items.forEach((item, ii) => {
+      const div = document.createElement('div');
+      div.className = 'question-item';
+      div.innerHTML = `
+        <div class="question-text">${item.ar}</div>
+        <div class="radio-group">
+          <label><input type="radio" name="morph_${gi}_${ii}" value="1"> صحيح</label>
+          <label><input type="radio" name="morph_${gi}_${ii}" value="0"> خطأ</label>
+        </div>
+      `;
+      groupDiv.appendChild(div);
+    });
+    container.appendChild(groupDiv);
+  });
+}
+
+// ================= التقرير النهائي =================
+
+function generateReport() {
+  // جلب البيانات
+  const name = document.getElementById('childName').value || 'غير محدد';
+  const dob = document.getElementById('dob').value || 'غير محدد';
+  const evalDate = document.getElementById('evalDate').value || 'غير محدد';
+  const age = document.getElementById('age').value || 'غير محدد';
+  const complaint = document.getElementById('complaint').value || 'غير محدد';
+  
+  // حساب المفردات
+  const totalWords = document.querySelectorAll('#vocabContainer input:checked').length;
+  
+  // حساب التقييم غير الرسمي
+  let informalScore = 0;
+  let informalPossible = 0;
+  informalData.forEach((_, i) => {
+    const selected = document.querySelector(`input[name="inf_${i}"]:checked`);
+    if (selected) informalScore += parseInt(selected.value);
+    informalPossible += 2;
+  });
+  const informalPercentage = informalPossible > 0 ? (informalScore / informalPossible) * 100 : 0;
+
+  // حساب القواعد
+  let morphScore = 0;
+  let morphPossible = 0;
+  morphologyData.forEach((group, gi) => {
+    group.items.forEach((_, ii) => {
+      const selected = document.querySelector(`input[name="morph_${gi}_${ii}"]:checked`);
+      if (selected) morphScore += parseInt(selected.value);
+      morphPossible += 1;
+    });
+  });
+  const morphPercentage = morphPossible > 0 ? (morphScore / morphPossible) * 100 : 0;
+
+  // بناء التقرير
+  const reportHTML = `
+    <div style="padding:20px; background:white; border:1px solid #ccc; border-radius:8px;">
+      <h2 style="text-align:center; color:#0f766e; margin-bottom:20px;">تقرير التقييم الشامل</h2>
+      
+      <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px;">1. بيانات المستفيد</h3>
+      <p><strong>الاسم:</strong> ${name}</p>
+      <p><strong>تاريخ الميلاد:</strong> ${dob}</p>
+      <p><strong>تاريخ التقييم:</strong> ${evalDate}</p>
+      <p><strong>العمر الزمني:</strong> ${age}</p>
+      <p><strong>الشكوى الرئيسية:</strong> ${complaint}</p>
+
+      <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px; margin-top:20px;">2. ملخص النتائج</h3>
+      <table style="width:100%; border-collapse:collapse; margin-top:10px;">
+        <tr style="background:#f0fdfa;"><th style="border:1px solid #ccc; padding:8px;">المجال</th><th style="border:1px solid #ccc; padding:8px;">النتيجة</th></tr>
+        <tr><td style="border:1px solid #ccc; padding:8px;">مسح المفردات (عدد الكلمات)</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${totalWords} كلمة</td></tr>
+        <tr><td style="border:1px solid #ccc; padding:8px;">التقييم غير الرسمي (نسبة المهارات)</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${informalPercentage.toFixed(1)}%</td></tr>
+        <tr><td style="border:1px solid #ccc; padding:8px;">تحليل القواعد (نسبة الدقة)</td><td style="border:1px solid #ccc; padding:8px; text-align:center;">${morphPercentage.toFixed(1)}%</td></tr>
+      </table>
+
+      <h3 style="color:#0f766e; border-bottom:1px solid #ccc; padding-bottom:5px; margin-top:20px;">3. التوصيات المبدئية</h3>
+      <ul style="padding-right:20px; margin-top:10px;">
+        ${totalWords < 50 ? '<li>يوصى بزيادة الحصيلة اللغوية من خلال القراءة واللعب التفاعلي.</li>' : ''}
+        ${informalPercentage < 70 ? '<li>يوصى بتدريب مهارات التواصل الاجتماعي واللعب التفاعلي.</li>' : ''}
+        ${morphPercentage < 70 ? '<li>يوصى بتدريب القواعد النحوية والصرفية بشكل مباشر.</li>' : ''}
+        ${totalWords >= 50 && informalPercentage >= 70 && morphPercentage >= 70 ? '<li>المستفيد يظهر مهارات لغوية جيدة، يوصى بالمراقبة الدورية.</li>' : ''}
+      </ul>
+      
+      <p style="margin-top:30px; text-align:center; font-weight:bold; color:#0f766e;">تم التقييم بواسطة: Adham Salloum</p>
+    </div>
+  `;
+
+  const reportArea = document.getElementById('reportArea');
+  reportArea.innerHTML = reportHTML;
+  reportArea.style.display = 'block';
+  
+  // إضافة زر الطباعة
+  const printBtn = document.createElement('button');
+  printBtn.className = 'action-btn no-print';
+  printBtn.textContent = '🖨️ طباعة التقرير / حفظ PDF';
+  printBtn.onclick = () => window.print();
+  printBtn.style.marginTop = '20px';
+  reportArea.appendChild(printBtn);
+
+  reportArea.scrollIntoView({ behavior: 'smooth' });
+}
+
+// تشغيل التوليد عند تحميل الصفحة
+window.onload = function() {
+  generateInterview();
+  generateVocab();
+  generateInformal();
+  generateMorphology();
+};
+</script>
+</body>
+</html>
