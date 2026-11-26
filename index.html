@@ -13,7 +13,6 @@
   header h1 { font-size: 24px; margin-bottom: 8px; }
   header p { font-size: 14px; opacity: 0.9; }
   
-  /* التبويبات */
   .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
   .tab-btn { padding: 10px 15px; border: none; border-radius: 8px; background: #e2e8f0; color: #475569; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 14px; }
   .tab-btn:hover { background: #cbd5e1; }
@@ -25,7 +24,7 @@
   .card h2 { font-size: 18px; color: #0f766e; margin-bottom: 15px; border-bottom: 2px solid #ccfbf1; padding-bottom: 8px; }
   label { display: block; font-size: 15px; font-weight: 600; margin-bottom: 5px; color: #475569; }
   input[type="text"], input[type="number"], input[type="date"], textarea, select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; font-family: inherit; margin-bottom: 15px; }
-  textarea { min-height: 80px; resize: vertical; }
+  textarea { min-height: 100px; resize: vertical; }
   
   .question-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px; border-bottom: 1px solid #eee; gap: 15px; }
   .question-text { flex: 1; font-size: 14px; font-weight: 500; }
@@ -278,8 +277,7 @@ window.onload = function() { generateInterview(); generateInventory(); generateV
 function calculatePercentage(prefix, count) {
   let score = 0, possible = 0;
   for (let i = 0; i < count; i++) {
-    // هذا هو السطر الذي تم تصحيحه
-    const sel = document.querySelector(`input[name="${prefix}_${i}"]:checked`);
+    const sel = document.querySelector(`input[name^="${prefix}_"][name$="_${i}"]:checked`);
     if (sel) score += parseInt(sel.value);
     possible += 2;
   }
@@ -292,6 +290,7 @@ function generateReport() {
   const complaint = document.getElementById('complaint').value || 'غير محدد';
   
   const totalWords = document.querySelectorAll('#vocabContainer input:checked').length;
+  
   const intPercent = calculatePercentage('int', interviewData.length);
   const pragPercent = calculatePercentage('prag', pragmaticsData.length);
   
@@ -318,22 +317,32 @@ function generateReport() {
   const morphPercent = morphPossible > 0 ? (morphScore / morphPossible) * 100 : 0;
 
   let diagnosis = "", reason = "";
-  if (pragPercent < 50 && invPercent < 60) {
+  
+  if (intPercent === 0 && invPercent === 0 && pragPercent === 0 && morphPercent === 0 && totalWords === 0) {
+    diagnosis = "لا توجد بيانات كافية للتشخيص";
+    reason = "يرجى ملء الاستمارات في التبويبات الأخرى أولاً.";
+  } 
+  else if (pragPercent < 50 && invPercent < 60) {
     diagnosis = "اشتباه اضطراب طيف التوحد أو اضطراب التواصل الاجتماعي";
     reason = "ضعف واضح في المهارات البرجماتية والتفاعل الاجتماعي، مع تأخر في النمو اللغوي.";
-  } else if (pragPercent < 60) {
+  } 
+  else if (pragPercent < 60) {
     diagnosis = "اضطراب التواصل الاجتماعي (البرجماتي)";
     reason = "ضعف في استخدام اللغة في السياق الاجتماعي، مع سلامة نسبية في المفردات والقواعد.";
-  } else if (invPercent < 50 && intPercent < 50) {
+  } 
+  else if (invPercent < 50 && intPercent < 50) {
     diagnosis = "اضطراب اللغة المختلط (Mixed Receptive-Expressive Language Disorder)";
     reason = "تأخر شامل في الفهم والتعبير اللغوي.";
-  } else if (invPercent < 60) {
+  } 
+  else if (invPercent < 60) {
     diagnosis = "تأخر لغوي بسيط إلى متوسط";
     reason = "وجود تأخر في بعض مهارات النمو اللغوي مقارنة بالعمر الزمني.";
-  } else if (morphPercent < 50 && totalWords > 50) {
+  } 
+  else if (morphPercent < 50 && totalWords > 50) {
     diagnosis = "اضطراب لغوي تعبيري (Expressive Language Disorder)";
     reason = "حصيلة المفردات جيدة، ولكن هناك ضعف في القواعد النحوية.";
-  } else {
+  } 
+  else {
     diagnosis = "نمو لغوي ضمن الحدود الطبيعية";
     reason = "المستفيد يظهر مهارات لغوية وبرجماتية جيدة.";
   }
@@ -389,4 +398,4 @@ function generateReport() {
 }
 </script>
 </body>
-</html
+</html>
