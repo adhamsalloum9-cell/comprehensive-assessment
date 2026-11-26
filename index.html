@@ -13,6 +13,7 @@
   header h1 { font-size: 24px; margin-bottom: 8px; }
   header p { font-size: 14px; opacity: 0.9; }
   
+  /* التبويبات */
   .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
   .tab-btn { padding: 10px 15px; border: none; border-radius: 8px; background: #e2e8f0; color: #475569; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 14px; }
   .tab-btn:hover { background: #cbd5e1; }
@@ -24,7 +25,7 @@
   .card h2 { font-size: 18px; color: #0f766e; margin-bottom: 15px; border-bottom: 2px solid #ccfbf1; padding-bottom: 8px; }
   label { display: block; font-size: 15px; font-weight: 600; margin-bottom: 5px; color: #475569; }
   input[type="text"], input[type="number"], input[type="date"], textarea, select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; font-family: inherit; margin-bottom: 15px; }
-  textarea { min-height: 100px; resize: vertical; }
+  textarea { min-height: 80px; resize: vertical; }
   
   .question-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px; border-bottom: 1px solid #eee; gap: 15px; }
   .question-text { flex: 1; font-size: 14px; font-weight: 500; }
@@ -111,12 +112,12 @@
     <div class="card"><h2>تحليل القواعد</h2><div id="morphologyContainer"></div></div>
   </div>
 
-  <!-- 7. الدلالات (جديد) -->
+  <!-- 7. الدلالات -->
   <div id="tab-semantics" class="tab-content">
     <div class="card"><h2>المهارات الدلالية (Semantics)</h2><div id="semanticsContainer"></div></div>
   </div>
 
-  <!-- 8. عينة الكلام (جديد) -->
+  <!-- 8. عينة الكلام -->
   <div id="tab-sample" class="tab-content">
     <div class="card">
       <h2>تسجيل عينة الكلام (Language Sample)</h2>
@@ -272,13 +273,12 @@ function analyzeSample() {
 }
 
 window.onload = function() { generateInterview(); generateInventory(); generateVocab(); generatePragmatics(); generateMorphology(); generateSemantics(); };
-</script>
 
-<!-- الجزء الثاني: التقرير -->
-<script>
+// ================= التقرير =================
 function calculatePercentage(prefix, count) {
   let score = 0, possible = 0;
   for (let i = 0; i < count; i++) {
+    // هذا هو السطر الذي تم تصحيحه
     const sel = document.querySelector(`input[name="${prefix}_${i}"]:checked`);
     if (sel) score += parseInt(sel.value);
     possible += 2;
@@ -389,4 +389,4 @@ function generateReport() {
 }
 </script>
 </body>
-</html>
+</html
